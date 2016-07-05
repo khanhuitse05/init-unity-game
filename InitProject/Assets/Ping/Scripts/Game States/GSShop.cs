@@ -16,7 +16,7 @@ public class GSShop : GSTemplate
     }
     protected override void init()
     {
-        txtStar.text = GamePreferences.profile.Star.ToString();
+        txtStar.text = GamePreferences.profile.star.ToString();
         LoadShop();
     }
     void LoadShop()

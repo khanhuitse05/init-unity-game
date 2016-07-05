@@ -6,26 +6,12 @@ using LitJson;
 
 public class SaveGameManager
 {
-
-    public static string getKeyByUser(string paramDefaultKey)
-    {
-        return paramDefaultKey;
-    }
-
-    public static T loadDataByUser<T>(string paramDefaultKey) where T : class
-    {
-        string key = null;
-            key = paramDefaultKey;
-        return loadData<T>(key);
-    }
-
-    public static bool saveDataByUser<T>(string paramDefaultKey, T paramData) where T : class
-    {
-        string key = getKeyByUser(paramDefaultKey);
-        return saveData<T>(key, paramData);
-    }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="paramKey"></param>
+    /// <returns></returns>
     public static T loadData<T>(string paramKey) where T : class
     {
         string jsonData = loadStringData(paramKey);
@@ -54,7 +40,6 @@ public class SaveGameManager
         string base64Data = JSONControll.jsonToBase64(jsonData);
         return saveData(paramKey, base64Data);
     }
-
 
     //---------------------------------------------------------------------------
 

@@ -28,7 +28,7 @@ public class GSTutorial : GSTemplate
 
     public void onBtnPlayClick()
     {
-        GamePreferences.profile.EnableTutorial = false;
+        GamePreferences.profile.enableTutorial = false;
         GamePreferences.saveProfile();
         GameStatesManager.Instance.stateMachine.SwitchState(GSGamePlay.Instance);
     }

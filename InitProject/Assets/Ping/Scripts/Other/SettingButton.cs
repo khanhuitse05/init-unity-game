@@ -7,13 +7,13 @@ public class SettingButton : MonoBehaviour {
     public GameObject audioOff;
     void OnEnable()
     {
-        Utils.setActive(audioOn, GamePreferences.profile.SoundVolume > 0);
-        Utils.setActive(audioOff, GamePreferences.profile.SoundVolume == 0);
+        Utils.setActive(audioOn, GamePreferences.profile.soundVolume > 0);
+        Utils.setActive(audioOff, GamePreferences.profile.soundVolume == 0);
     }
     public void onBtnSettingsClick()
     {
         float value = 0;
-        if (GamePreferences.profile.SoundVolume != 0)
+        if (GamePreferences.profile.soundVolume != 0)
         {
             value = 0f;
             Utils.setActive(audioOn, false);
@@ -25,7 +25,7 @@ public class SettingButton : MonoBehaviour {
             Utils.setActive(audioOn, true);
             Utils.setActive(audioOff, false);
         }
-        GamePreferences.profile.SoundVolume = value;
+        GamePreferences.profile.soundVolume = value;
         AudioManager.SetSFXVolume(value);
         GamePreferences.saveProfile();
     }

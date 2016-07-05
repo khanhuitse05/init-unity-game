@@ -12,14 +12,14 @@ public class GSHome : GSTemplate
     }
     protected override void init()
     {
-        if (GamePreferences.profile.EnableTutorial)
+        if (GamePreferences.profile.enableTutorial)
         {
             GameStatesManager.Instance.stateMachine.SwitchState(GSTutorial.Instance);
         }
         if (isNewLaunch)
         {
             isNewLaunch = false;
-            GamePreferences.submitScore(GamePreferences.profile.HighScore);
+            GamePreferences.submitScore(GamePreferences.profile.highScore);
         }
     }
     public void onBtnPlayClick()

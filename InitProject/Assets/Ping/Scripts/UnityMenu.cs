@@ -4,9 +4,9 @@ using UnityEditor;
 
 public class UnityMenu : MonoBehaviour
 {
-    [MenuItem("Ping/Delete Saved files")]
+    [MenuItem("Ping/Delete PlayerPrefs")]
     public static void ClearPlayerPrefs()
     {
-        PlayerPrefs.DeleteKey(ResourceDataTags.settingDataKey);
+        PlayerPrefs.DeleteAll();
     }
 }

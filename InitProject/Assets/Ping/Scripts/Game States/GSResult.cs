@@ -17,18 +17,18 @@ public class GSResult : GSTemplate
     protected override void init()
     {
         showResult(100);
-        if (GSGamePlay.countPlaygame == 7 && GamePreferences.profile.Rate < 2)
+        if (GSGamePlay.countPlaygame == 7 && GamePreferences.profile.rate < 2)
         {
-            GamePreferences.profile.Rate++;
+            GamePreferences.profile.rate++;
             GamePreferences.saveProfile();
             PopupManager.Instance.InitYesNoPopUp("Love Block Dash?\nTell other how you fell.", onBtnRateClick, null, "RATE", "LATER");
         }
     }
     void showResult(int _score)
     {
-        lbBestScore.text = "BEST   " + GamePreferences.profile.HighScore.ToString();
+        lbBestScore.text = "BEST   " + GamePreferences.profile.highScore.ToString();
         lbCurrentScore.text = _score.ToString();
-        lbStar.text = GamePreferences.profile.Star.ToString();
+        lbStar.text = GamePreferences.profile.star.ToString();
     }
     protected override void onBackKey()
     {

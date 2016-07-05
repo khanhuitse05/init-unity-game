@@ -33,7 +33,7 @@ public class GameStatesManager : MonoBehaviour
     {
         Profile gameProfile = null;
         gameProfile = GamePreferences.initProfile();
-        AudioManager.SetSFXVolume(gameProfile.SoundVolume);
+        AudioManager.SetSFXVolume(gameProfile.soundVolume);
         GameConstants.Instance.Init();
         stateMachine.PushState(GSHome.Instance);
     }
