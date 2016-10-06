@@ -5,25 +5,10 @@ public class GameStatesManager : MonoBehaviour
 {
     static GameStatesManager _instance;
     public static GameStatesManager Instance { get { return _instance; } }
-    public StateMachine stateMachine;
     public static bool enableBackKey = true;
-    public StateMachine StateMachine
-    {
-        get { return stateMachine; }
-        set { stateMachine = value; }
-    }
-    GameObject inputProcessor;
-    public UnityEngine.GameObject InputProcessor
-    {
-        get { return inputProcessor; }
-        set { inputProcessor = value; }
-    }
-    static Action onBackKey;
-    public static Action OnBackKey
-    {
-        get { return onBackKey; }
-        set { onBackKey = value; }
-    }
+    public StateMachine stateMachine { get; set; }
+    public GameObject InputProcessor { get; set; }
+    public static Action onBackKey { get; set; }
     void Awake()
     {
         _instance = this;
@@ -31,20 +16,19 @@ public class GameStatesManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Profile gameProfile = null;
-        gameProfile = GamePreferences.initProfile();
-        AudioManager.SetSFXVolume(gameProfile.soundVolume);
+        GamePreferences.Instance.LoadSetting();
+        AudioManager.SetSFXVolume(GamePreferences.Instance.setting.soundVolume);
         GameConstants.Instance.Init();
         stateMachine.PushState(GSHome.Instance);
     }
     // Update is called once per frame
     void Update()
     {
-        if (OnBackKey != null && Input.GetKeyDown(KeyCode.Escape))
+        if (onBackKey != null && Input.GetKeyDown(KeyCode.Escape))
         {
             if (enableBackKey)
             {
-                OnBackKey();
+                onBackKey();
             }
         }
     }

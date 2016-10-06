@@ -3,8 +3,6 @@ public class GSHome : GSTemplate
 {
     static IState _instance;
     public static IState Instance { get { return _instance; } }
-    bool isNewLaunch = true;
-
     protected override void Awake()
     {
         base.Awake();
@@ -12,42 +10,24 @@ public class GSHome : GSTemplate
     }
     protected override void init()
     {
-        if (GamePreferences.profile.enableTutorial)
-        {
-            GameStatesManager.Instance.stateMachine.SwitchState(GSTutorial.Instance);
-        }
-        if (isNewLaunch)
-        {
-            isNewLaunch = false;
-            GamePreferences.submitScore(GamePreferences.profile.highScore);
-        }
     }
-    public void onBtnPlayClick()
+    public override void onEnter()
     {
-        GameStatesManager.Instance.stateMachine.SwitchState(GSGamePlay.Instance);
+        base.onEnter();
     }
-    public void onBtnLikeClick()
+    public override void onResume()
     {
-        Application.OpenURL("https://www.facebook.com/");
+        base.onResume();
     }
-    public void onBtnHowToPlay()
+    public override void onSuspend()
     {
-        GameStatesManager.Instance.stateMachine.SwitchState(GSTutorial.Instance);
+        base.onSuspend();
     }
-    public void onBtnRateClick()
+    public override void onExit()
     {
-#if UNITY_IOS
-            Application.OpenURL("");
-#elif UNITY_ANDROID
-            Application.OpenURL("https://play.google.com/");
-#endif
+        base.onExit();
     }
-    public void onBtnLearderBoardClick()
+    protected override void onBackKey()
     {
-        PopupManager.Instance.InitMesage("not available");
-    }
-    public void onBtnCustomizeClick()
-    {
-        GameStatesManager.Instance.stateMachine.SwitchState(GSShop.Instance);
     }
 }

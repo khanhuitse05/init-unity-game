@@ -5,10 +5,6 @@ public class GSShop : GSTemplate
 {
     static IState _instance;
     public static IState Instance { get { return _instance; } }
-    public GameObject pfItem;
-    public Text txtStar;
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -16,21 +12,25 @@ public class GSShop : GSTemplate
     }
     protected override void init()
     {
-        txtStar.text = GamePreferences.profile.star.ToString();
-        LoadShop();
     }
-    void LoadShop()
+    public override void onEnter()
     {
+        base.onEnter();
+    }
+    public override void onResume()
+    {
+        base.onResume();
+    }
+    public override void onSuspend()
+    {
+        base.onSuspend();
+    }
+    public override void onExit()
+    {
+        base.onExit();
     }
     protected override void onBackKey()
     {
-        onBtnOkClick();
-    }
-
-    public void onBtnOkClick()
-    {
-        GamePreferences.saveProfile();
-        GameStatesManager.Instance.stateMachine.SwitchState(GSGamePlay.Instance);
     }
 
 }

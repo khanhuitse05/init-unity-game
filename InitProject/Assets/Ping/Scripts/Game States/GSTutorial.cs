@@ -13,24 +13,25 @@ public class GSTutorial : GSTemplate
     }
     protected override void init()
     {
-        Invoke("startTutorial", 1);
     }
-    void startTutorial()
+    public override void onEnter()
     {
+        base.onEnter();
     }
-    void Update()
+    public override void onResume()
     {
+        base.onResume();
+    }
+    public override void onSuspend()
+    {
+        base.onSuspend();
+    }
+    public override void onExit()
+    {
+        base.onExit();
     }
     protected override void onBackKey()
     {
-        onBtnPlayClick();
-    }
-
-    public void onBtnPlayClick()
-    {
-        GamePreferences.profile.enableTutorial = false;
-        GamePreferences.saveProfile();
-        GameStatesManager.Instance.stateMachine.SwitchState(GSGamePlay.Instance);
     }
 }
 

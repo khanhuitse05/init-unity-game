@@ -4,7 +4,6 @@ using System.Collections;
 
 public class MessagePopupComponent : MonoBehaviour
 {
-
     string message;
     public Text messageLbl;
     public Animator animator;

@@ -5,7 +5,6 @@ using System.IO;
 
 public class Utils
 {
-    public const int MAX_CUSTOMIZE = 2;
     public static int ColorToInt(Color32 clr)
     {
         return (clr.a << 24 | clr.r << 16 | clr.g << 8 | clr.b);
@@ -18,29 +17,7 @@ public class Utils
         int b = clr & 0x000000ff;
         return new Color32((byte)r, (byte)g, (byte)b, (byte)a);
     }
-    public static string ArrayIntToString(int[] A)
-    {
-        string s = "";
-        if (A != null)
-        {
-            for (int i = 0; i < A.Length; i++)
-            {
-                s += A[i] + ",";
-            }
-        }
-        return s;
-    }
-    public static int[] StringtoArrayInt(string s)
-    {
-        string[] array = s.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-        int[] A = new int[array.Length];
-        for (int i = 0; i < array.Length; i++)
-        {
-            A[i] = Int32.Parse(array[i]);
-        }
-        return A;
-    }
-    //
+    
     public static void removeAllChildren(Transform paramParent, bool paramInstant=true)
     {
         if (paramParent == null)
@@ -114,13 +91,5 @@ public class Utils
         if (string.IsNullOrEmpty(paramURL))
             return false;
         return (paramURL.IndexOf("http") >= 0);
-    }
-}
-
-public class EnumParser
-{
-    public static T Parse<T>(string value)
-    {
-        return (T)Enum.Parse(typeof(T), value, true);
     }
 }

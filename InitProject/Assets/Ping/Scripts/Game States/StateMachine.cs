@@ -6,20 +6,15 @@ public abstract class IState : MonoBehaviour
 {
     public ParameterWrapper parameters = new ParameterWrapper();
     protected virtual void Awake()
-    {
-        this.gameObject.SetActive(false);
-    }
+    { }
     public virtual void onSuspend()
     { }
     public virtual void onResume()
     { }
     public virtual void onEnter()
-    {
-        this.gameObject.SetActive(true);
-    }
+    { }
     public virtual void onExit()
     {
-        this.gameObject.SetActive(false);
         parameters.Clear();
     }
 }
@@ -50,7 +45,6 @@ public class StateMachine : MonoBehaviour
         while (stateStack.Count > 0)
         {
             prevState = stateStack.Pop();
-            prevState.onSuspend();
             prevState.onExit();
         }
         stateStack.Push(state);
@@ -63,24 +57,12 @@ public class StateMachine : MonoBehaviour
         if (stateStack.Count > 0)
         {
             prevState = stateStack.Pop();
-            prevState.onSuspend();
             prevState.onExit();
         }
         IState thisState = stateStack.Peek();
         thisState.onResume();
     }
-
-    public void StartState(IState state)
-    {
-        state.onEnter();
-    }
-
-    public void EndState(IState state)
-    {
-        state.onSuspend();
-        state.onExit();
-    }
-
+    
     public IState currentState
     {
         get
