@@ -6,9 +6,6 @@ using LitJson;
 
 public class SaveGameManager
 {
-    /// <summary>
-    /// 
-    /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="paramKey"></param>
     /// <returns></returns>
@@ -17,12 +14,10 @@ public class SaveGameManager
         string jsonData = loadStringData(paramKey);
         if (string.IsNullOrEmpty(jsonData))
             return null;
-
         try
         {
-            string tmpJsonData = JSONControll.base64ToJson(jsonData);
-
-            return JsonMapper.ToObject<T>(tmpJsonData);
+            //string tmpJsonData = JSONControll.base64ToJson(jsonData);
+            return JsonMapper.ToObject<T>(jsonData);
         }
         catch (Exception ex)
         {
@@ -30,19 +25,16 @@ public class SaveGameManager
             return null;
         }
     }
-
     public static bool saveData<T>(string paramKey, T paramData) where T : class
     {
         string jsonData = "";
         if (paramData != null)
             jsonData = JsonMapper.ToJson(paramData);
-
-        string base64Data = JSONControll.jsonToBase64(jsonData);
-        return saveData(paramKey, base64Data);
+        //string base64Data = JSONControll.jsonToBase64(jsonData);
+        return saveData(paramKey, jsonData);
     }
 
     //---------------------------------------------------------------------------
-
     #region Basic Get/Set Functions
 
     static bool saveData(string paramKey, string paramData)

@@ -5,6 +5,7 @@ public class PopupManager : MonoBehaviour
 {
     static PopupManager _instance;
     public static PopupManager Instance { get { return _instance; } }
+    void Awake(){ _instance = this;}
 
     public Transform popUpRoot;
     public GameObject YesNoPopUpPrefab;
@@ -12,16 +13,6 @@ public class PopupManager : MonoBehaviour
     public GameObject MesagePopUpPrefab;
     public GameObject LoadingUI;
 
-    void Awake()
-    {
-        _instance = this;
-    }
-    // Use this for initialization
-    void Start()
-    {
-        DontDestroyOnLoad(this);
-        LoadingUI.SetActive(false);
-    }
     public void InitYesNoPopUp(string message, Action yes, Action no, string _yes = "YES", string _no = "NO")
     {
         GameObject popup = null;

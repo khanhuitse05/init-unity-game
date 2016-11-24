@@ -44,20 +44,19 @@ public class GamePreferences : MonoBehaviour
     /// <summary>
     /// Setting
     /// </summary>
-    static Setting _setting;
     public Setting setting { get; set; }
     public Setting LoadSetting()
     {
-        _setting = SaveGameManager.loadData<Setting>(GameTags.settingDataKey);
-        if (_setting == null)
+        setting = SaveGameManager.loadData<Setting>(GameTags.settingDataKey);
+        if (setting == null)
         {
-            _setting = new Setting();
+            setting = new Setting();
             SaveSetting();
         }
-        return _setting;
+        return setting;
     }
     public void SaveSetting()
     {
-        SaveGameManager.saveData<Setting>(GameTags.settingDataKey, _setting);
+        SaveGameManager.saveData<Setting>(GameTags.settingDataKey, setting);
     }
 }

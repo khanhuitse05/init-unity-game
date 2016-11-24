@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class GSShop : GSTemplate
 {
-    static IState _instance;
-    public static IState Instance { get { return _instance; } }
+    static GSShop _instance;
+    public static GSShop Instance { get { return _instance; } }
     protected override void Awake()
     {
         base.Awake();

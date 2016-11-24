@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 ////////////////////////////////////////////////////////
 //Author:
@@ -9,11 +10,15 @@ public class GSTemplate : IState
 {
     public GameObject guiMain;
     public AudioClip musicClip;
+    CanvasGroup canvasGroup;
     bool isFirst;
+    protected float timeIn = 0.5f;
+    protected float timeOut = 0.5f;
     protected override void Awake()
     {
         base.Awake();
-        Utils.setActive(guiMain, false);
+        canvasGroup = guiMain.GetComponent<CanvasGroup>();
+        guiMain.SetActive(false);
         isFirst = true;
     }
     /// <summary>
@@ -21,7 +26,6 @@ public class GSTemplate : IState
     /// </summary>
     protected virtual void init()
     {
-
     }
     protected virtual void onBackKey()
     {
@@ -29,18 +33,34 @@ public class GSTemplate : IState
     public override void onSuspend()
     {
         base.onSuspend();
-        guiMain.SetActive(false);
         GameStatesManager.onBackKey = null;
+        if (canvasGroup != null)
+        {
+            StartCoroutine("FadeOut");
+        }
+        else
+        {
+            guiMain.SetActive(false);
+        }
     }
     public override void onResume()
     {
         base.onResume();
         GameStatesManager.Instance.InputProcessor = guiMain;
         GameStatesManager.onBackKey = onBackKey;
-        guiMain.SetActive(true);
         if (musicClip != null)
         {
             AudioManager.PlayMusic(musicClip, true);
+        }
+        if (canvasGroup != null)
+        {
+            guiMain.SetActive(true);
+            canvasGroup.alpha = 0;
+            StartCoroutine("FadeIn");
+        }
+        else
+        {
+            guiMain.SetActive(true);
         }
     }
     public override void onEnter()
@@ -57,5 +77,25 @@ public class GSTemplate : IState
     {
         base.onExit();
         onSuspend();
+    }
+    IEnumerator FadeIn()
+    {
+        canvasGroup.interactable = false;
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime / timeIn;
+            yield return null;
+        }
+        canvasGroup.interactable = true;
+    }
+    IEnumerator FadeOut()
+    {
+        canvasGroup.interactable = false;
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime / timeOut;
+            yield return null;
+        }
+        guiMain.SetActive(false);
     }
 }

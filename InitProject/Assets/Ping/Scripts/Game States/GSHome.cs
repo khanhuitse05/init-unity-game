@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 public class GSHome : GSTemplate
 {
-    static IState _instance;
-    public static IState Instance { get { return _instance; } }
+    static GSHome _instance;
+    public static GSHome Instance { get { return _instance; } }
     protected override void Awake()
     {
         base.Awake();

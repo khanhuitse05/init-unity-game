@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class GSResult : GSTemplate
 {
-    static IState _instance;
-    public static IState Instance { get { return _instance; } }
+    static GSResult _instance;
+    public static GSResult Instance { get { return _instance; } }
     protected override void Awake()
     {
         base.Awake();

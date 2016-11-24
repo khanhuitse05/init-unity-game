@@ -2,8 +2,8 @@
 
 public class GSGamePlay : GSTemplate
 {
-    static IState _instance;
-    public static IState Instance { get { return _instance; } }
+    static GSGamePlay _instance;
+    public static GSGamePlay Instance { get { return _instance; } }
     protected override void Awake()
     {
         base.Awake();

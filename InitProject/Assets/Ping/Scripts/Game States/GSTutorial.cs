@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class GSTutorial : GSTemplate
 {
-    static IState _instance;
-    public static IState Instance { get { return _instance; } }
+    static GSTutorial _instance;
+    public static GSTutorial Instance { get { return _instance; } }
     protected override void Awake()
     {
         base.Awake();
