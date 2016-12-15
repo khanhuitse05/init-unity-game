@@ -15,12 +15,10 @@ public class GameStatesManager : MonoBehaviour
     {
         _instance = this;
     }
-    // Use this for initialization
     void Start()
     {
         stateMachine.PushState(defaultState);
     }
-    // Update is called once per frame
     void Update()
     {
         if (onBackKey != null && Input.GetKeyDown(KeyCode.Escape))

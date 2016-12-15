@@ -7,26 +7,17 @@ using System.Globalization;
 
 public class Utils
 {
-    public static void removeAllChildren(Transform paramParent, bool paramInstant = true)
-    {
-        if (paramParent == null)
-            return;
-        for (int i = paramParent.childCount - 1; i >= 0; i--)
-        {
-            if (paramInstant)
-            {
-                GameObject.DestroyImmediate(paramParent.GetChild(i).gameObject);
-            }
-            else
-            {
-                paramParent.GetChild(i).gameObject.SetActive(false);
-                GameObject.Destroy(paramParent.GetChild(i).gameObject);
-            }
-        }
-    }
     public static void Log(string paramLog)
     {
         Debug.Log(paramLog);
+    }
+    public static void LogYellow(string paramLog)
+    {
+        Debug.Log("<color=yellow>" + paramLog + "</color>");
+    }
+    public static void LogRed(string paramLog)
+    {
+        Debug.Log("<color=red>" + paramLog + "</color>");
     }
     public static void LogError(string paramLog)
     {
@@ -53,21 +44,31 @@ public class Utils
     {
         GameObject newObject = GameObject.Instantiate(paramPrefab) as GameObject;
         newObject.transform.SetParent(paramParent);
-        newObject.transform.localPosition = paramPrefab.transform.localPosition;
+        newObject.transform.localPosition = Vector3.zero;
         newObject.transform.localScale = paramPrefab.transform.localScale;
         newObject.SetActive(true);
         return newObject;
-    }
-    public static string removeExtension(string paramPath)
-    {
-        int index = paramPath.LastIndexOf('.');
-        if (index < 0)
-            return paramPath;
-        return paramPath.Substring(0, index);
     }
     public static void setActive(GameObject paramObject, bool paramValue)
     {
         if (paramObject != null)
             paramObject.SetActive(paramValue);
+    }
+    public static void removeAllChildren(Transform paramParent, bool paramInstant = true)
+    {
+        if (paramParent == null)
+            return;
+        for (int i = paramParent.childCount - 1; i >= 0; i--)
+        {
+            if (paramInstant)
+            {
+                GameObject.DestroyImmediate(paramParent.GetChild(i).gameObject);
+            }
+            else
+            {
+                paramParent.GetChild(i).gameObject.SetActive(false);
+                GameObject.Destroy(paramParent.GetChild(i).gameObject);
+            }
+        }
     }
 }

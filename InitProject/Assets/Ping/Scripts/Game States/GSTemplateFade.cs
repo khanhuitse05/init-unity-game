@@ -6,14 +6,18 @@ using UnityEngine;
 //TODO: a game state sample
 ////////////////////////////////////////////////////////
 
-public class GSTemplate : IState
+public class GSTemplateFade : IState
 {
     public GameObject guiMain;
     public AudioClip musicClip;
     bool isFirst;
+    CanvasGroup canvasGroup;
+    protected float timeIn = 0.5f;
+    protected float timeOut = 0.5f;
     protected override void Awake()
     {
         base.Awake();
+        canvasGroup = guiMain.GetComponent<CanvasGroup>();
         guiMain.SetActive(false);
         isFirst = true;
     }
@@ -30,7 +34,14 @@ public class GSTemplate : IState
     {
         base.onSuspend();
         GameStatesManager.onBackKey = null;
-        guiMain.SetActive(false);
+        if (canvasGroup != null)
+        {
+            StartCoroutine(FadeOut());
+        }
+        else
+        {
+            guiMain.SetActive(false);
+        }
     }
     public override void onResume()
     {
@@ -41,7 +52,14 @@ public class GSTemplate : IState
         {
             AudioManager.PlayMusic(musicClip, true);
         }
-        guiMain.SetActive(true);
+        if (canvasGroup != null)
+        {
+            StartCoroutine(FadeIn());
+        }
+        else
+        {
+            guiMain.SetActive(true);
+        }
     }
     public override void onEnter()
     {
@@ -57,5 +75,27 @@ public class GSTemplate : IState
     {
         base.onExit();
         onSuspend();
+    }
+    IEnumerator FadeIn()
+    {
+        guiMain.SetActive(true);
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime / timeIn;
+            yield return null;
+        }
+        canvasGroup.interactable = true;
+    }
+    IEnumerator FadeOut()
+    {
+        canvasGroup.interactable = false;
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime / timeOut;
+            yield return null;
+        }
+        guiMain.SetActive(false);
     }
 }
