@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a0cc9d980e6b7c34a8b49b087e1d092e
+timeCreated: 1483608855
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - SFU Futura
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 47af61b19a77f314a9e0e04b56e6bf4c, type: 3}
+  - {fileID: 12800000, guid: 75a99ba96fcfa57459e29872d96f1f0f, type: 3}
+  - {fileID: 12800000, guid: 9574b50d5da694041ab06858a419d8d2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

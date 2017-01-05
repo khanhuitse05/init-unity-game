@@ -187,6 +187,52 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013269895968, guid: 68a9865ea5d42cb498c91812f8938cb8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010855700808, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000013195112312, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000010257058786, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000012609797800, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000012726988066, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000010657097646, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
+    - target: {fileID: 114000013596980158, guid: 68a9865ea5d42cb498c91812f8938cb8,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68a9865ea5d42cb498c91812f8938cb8, type: 2}
   m_IsPrefabParent: 0
@@ -232,6 +278,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443801009}
   - 20: {fileID: 443801010}
+  - 81: {fileID: 443801011}
   m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
@@ -287,6 +334,13 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!81 &443801011
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 443801008}
+  m_Enabled: 1
 --- !u!1 &546194348
 GameObject:
   m_ObjectHideFlags: 0
