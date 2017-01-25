@@ -90,7 +90,7 @@ NavMeshSettings:
     cellSize: 0.16666666
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &376226915
+--- !u!1001 &366773446
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -150,32 +150,32 @@ Prefab:
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
         type: 2}
@@ -187,52 +187,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1000013269895968, guid: 68a9865ea5d42cb498c91812f8938cb8, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010855700808, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000013195112312, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000010257058786, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000012609797800, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000012726988066, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000010657097646, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
-    - target: {fileID: 114000013596980158, guid: 68a9865ea5d42cb498c91812f8938cb8,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: a0cc9d980e6b7c34a8b49b087e1d092e,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68a9865ea5d42cb498c91812f8938cb8, type: 2}
   m_IsPrefabParent: 0
@@ -240,7 +194,7 @@ Prefab:
 RectTransform:
   m_PrefabParentObject: {fileID: 224000010371571430, guid: 68a9865ea5d42cb498c91812f8938cb8,
     type: 2}
-  m_PrefabInternal: {fileID: 376226915}
+  m_PrefabInternal: {fileID: 366773446}
 --- !u!1 &420095107
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,31 +367,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114000011725722132, guid: 858daf6836954c74c9a1ceeed2f6c380,
-        type: 2}
-      propertyPath: guiMain
-      value: 
-      objectReference: {fileID: 636480698}
-    - target: {fileID: 114000011599253888, guid: 858daf6836954c74c9a1ceeed2f6c380,
-        type: 2}
-      propertyPath: guiMain
-      value: 
-      objectReference: {fileID: 546194348}
-    - target: {fileID: 114000013849341028, guid: 858daf6836954c74c9a1ceeed2f6c380,
-        type: 2}
-      propertyPath: guiMain
-      value: 
-      objectReference: {fileID: 1159102689}
-    - target: {fileID: 114000010952270932, guid: 858daf6836954c74c9a1ceeed2f6c380,
-        type: 2}
-      propertyPath: guiMain
-      value: 
-      objectReference: {fileID: 1693541038}
     - target: {fileID: 114000010968789734, guid: 858daf6836954c74c9a1ceeed2f6c380,
         type: 2}
       propertyPath: guiMain
       value: 
       objectReference: {fileID: 785329177}
+    - target: {fileID: 114000010952270932, guid: 858daf6836954c74c9a1ceeed2f6c380,
+        type: 2}
+      propertyPath: guiMain
+      value: 
+      objectReference: {fileID: 1693541038}
+    - target: {fileID: 114000013849341028, guid: 858daf6836954c74c9a1ceeed2f6c380,
+        type: 2}
+      propertyPath: guiMain
+      value: 
+      objectReference: {fileID: 1159102689}
+    - target: {fileID: 114000011599253888, guid: 858daf6836954c74c9a1ceeed2f6c380,
+        type: 2}
+      propertyPath: guiMain
+      value: 
+      objectReference: {fileID: 546194348}
+    - target: {fileID: 114000011725722132, guid: 858daf6836954c74c9a1ceeed2f6c380,
+        type: 2}
+      propertyPath: guiMain
+      value: 
+      objectReference: {fileID: 636480698}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 858daf6836954c74c9a1ceeed2f6c380, type: 2}
   m_IsPrefabParent: 0

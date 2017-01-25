@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
         {
             GameObject musicObj = new GameObject();
             musicObj.name = "MusicSource";
-            musicObj.transform.parent = this.transform;
+            musicObj.transform.SetParent(this.transform);
             musicObj.transform.localPosition = Vector3.zero;
             musicSource = musicObj.AddComponent<AudioSource>();
             musicSource.loop = false;
@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
             src.minDistance = minFallOffRange;
 
             Transform t = obj.transform;
-            t.parent = thisObj.transform;
+            t.SetParent(thisObj.transform);
 
             audioObject[i] = new AudioObject(src, t);
         }
@@ -101,7 +101,7 @@ public class AudioManager : MonoBehaviour
         int ID = GetUnusedAudioObject();
 
         audioObject[ID].inUse = true;
-        audioObject[ID].thisT.parent = t;
+        audioObject[ID].thisT.SetParent(t);
         audioObject[ID].thisT.localPosition = Vector3.zero;
         audioObject[ID].source.loop = loop;
         audioObject[ID].source.clip = clip;
@@ -198,7 +198,7 @@ public class AudioManager : MonoBehaviour
             {
                 audioObject[index].source.Stop();
                 audioObject[index].inUse = false;
-                audioObject[index].thisT.parent = audioManager.transform;
+                audioObject[index].thisT.SetParent(audioManager.transform);
             }
         }
     }
@@ -209,7 +209,7 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         audioObject[ID].inUse = false;
-        audioObject[ID].thisT.parent = audioManager.transform;
+        audioObject[ID].thisT.SetParent(audioManager.transform);
     }
 
     static public void SetSFXVolume(float val)

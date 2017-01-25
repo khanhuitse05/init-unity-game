@@ -113,7 +113,7 @@ public class Pool{
 			obj=inactiveList[0];
             if (obj != null)
             {
-                obj.transform.parent = null;
+                obj.transform.SetParent(null);
                 obj.transform.position = pos;
                 obj.transform.rotation = rot;
                 obj.SetActive(true);
@@ -131,7 +131,7 @@ public class Pool{
 	public bool Unspawn(GameObject obj){
 		if(activeList.Contains(obj)){
 			obj.SetActive(false);
-			obj.transform.parent=ObjectPoolManager.GetOPMTransform();
+			obj.transform.SetParent(ObjectPoolManager.GetOPMTransform());
 			activeList.Remove(obj);
 			inactiveList.Add(obj);
 			return true;
@@ -146,7 +146,7 @@ public class Pool{
 		for(int i=currentCount; i<count; i++){
 			GameObject obj=(GameObject)MonoBehaviour.Instantiate(prefab);
 			obj.SetActive(false);
-			obj.transform.parent=ObjectPoolManager.GetOPMTransform();
+			obj.transform.SetParent(ObjectPoolManager.GetOPMTransform());
 			inactiveList.Add(obj);
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PopupManager : MonoBehaviour
 {
@@ -12,13 +13,14 @@ public class PopupManager : MonoBehaviour
     public GameObject InfoPopUpPrefab;
     public GameObject MesagePopUpPrefab;
     public GameObject LoadingUI;
+    public Text txtLoading;
 
     public void InitYesNoPopUp(string message, Action yes, Action no, string _yes = "YES", string _no = "NO")
     {
         GameObject popup = null;
         popup = GameObject.Instantiate(YesNoPopUpPrefab) as GameObject;
         popup.SetActive(true);
-        popup.transform.parent = popUpRoot.transform;
+        popup.transform.SetParent(popUpRoot.transform);
         popup.transform.localPosition = Vector3.zero;
         popup.transform.localScale = Vector3.one;
         YesNoPopUpComponent script = popup.GetComponent<YesNoPopUpComponent>();
@@ -30,7 +32,7 @@ public class PopupManager : MonoBehaviour
         GameObject popup = null;
         popup = GameObject.Instantiate(InfoPopUpPrefab) as GameObject;
         popup.SetActive(true);
-        popup.transform.parent = popUpRoot.transform;
+        popup.transform.SetParent(popUpRoot.transform);
         popup.transform.localPosition = Vector3.zero;
         popup.transform.localScale = Vector3.one;
         InfoPopUpComponent script = popup.GetComponent<InfoPopUpComponent>();
@@ -41,7 +43,7 @@ public class PopupManager : MonoBehaviour
         GameObject popup = null;
         popup = GameObject.Instantiate(MesagePopUpPrefab) as GameObject;
         popup.SetActive(true);
-        popup.transform.parent = popUpRoot.transform;
+        popup.transform.SetParent(popUpRoot.transform);
         popup.transform.localPosition = Vector3.zero;
         popup.transform.localScale = Vector3.one;
         MessagePopupComponent script = popup.GetComponent<MessagePopupComponent>();
@@ -50,7 +52,7 @@ public class PopupManager : MonoBehaviour
 
     bool oldBackKeyState = false;
     bool revertBackKeyState = false;
-    public void ShowLoading(bool disableBackKey = true)
+    public void ShowLoading(string _txtLoading = "Loading...",bool disableBackKey = true)
     {
         if (disableBackKey && !revertBackKeyState)
         {
@@ -58,6 +60,7 @@ public class PopupManager : MonoBehaviour
             oldBackKeyState = GameStatesManager.enableBackKey;
             GameStatesManager.enableBackKey = false;
         }
+        txtLoading.text = _txtLoading;
         LoadingUI.SetActive(true);
     }
     public void HideLoading()
