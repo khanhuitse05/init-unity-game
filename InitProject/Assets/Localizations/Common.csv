@@ -1,0 +1,30 @@
+KEY,vi,en
+C_Login,Đăng nhập,Login
+C_Username,Tài khoản,UserName
+C_Password,Mật khẩu:,Password:
+C_Submit,Gửi,Submit
+C_Save,Lưu,Save
+C_Cancel,Hủy,Cancel
+C_Back,Quay lại,Back
+C_Next,Tiếp tục,Next
+C_Edit,Sửa,Edit
+C_Skip,Bỏ qua,Skip
+C_Close,Đóng,Close
+C_Send,Gửi,Send
+C_Select,Chọn,Select
+C_ON,Bật,On
+C_OFF,Tắt,Off
+C_Confirm,Xác nhận,Confirm
+C_Change,Thay đổi,Change
+C_Loading,Loading,Loading
+C_Language,Language,Language
+C_Code,Code,Code
+C_Message,Message,Message
+C_Start,Bắt đầu,Start
+C_Yes,Yes,Yes
+C_No,No,No
+C_Result,Kết quả,Result
+C_Finish,Kết thúc,Finish
+C_Check,Kiểm tra,Check
+c_True,Đúng,True
+C_False,Sai,False
