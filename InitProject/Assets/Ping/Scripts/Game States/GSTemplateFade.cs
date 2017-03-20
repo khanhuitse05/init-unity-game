@@ -6,37 +6,22 @@ using UnityEngine;
 //TODO: a game state sample
 ////////////////////////////////////////////////////////
 
-public class GSTemplateFade : IState
+public class GSTemplateFade : GSTemplate
 {
-    public GameObject guiMain;
-    public AudioClip musicClip;
-    bool isFirst;
     CanvasGroup canvasGroup;
-    protected float timeIn = 0.5f;
-    protected float timeOut = 0.5f;
+    protected float timeIn = 0.2f;
+    protected float timeOut = 0.2f;
     protected override void Awake()
     {
         base.Awake();
         canvasGroup = guiMain.GetComponent<CanvasGroup>();
-        guiMain.SetActive(false);
-        isFirst = true;
-    }
-    /// <summary>
-    /// One time when start
-    /// </summary>
-    protected virtual void init()
-    {
-    }
-    protected virtual void onBackKey()
-    {
     }
     public override void onSuspend()
     {
-        base.onSuspend();
         GameStatesManager.onBackKey = null;
         if (canvasGroup != null)
         {
-            StartCoroutine(FadeOut());
+            FadeOut();
         }
         else
         {
@@ -46,56 +31,35 @@ public class GSTemplateFade : IState
     public override void onResume()
     {
         base.onResume();
-        GameStatesManager.Instance.InputProcessor = guiMain;
-        GameStatesManager.onBackKey = onBackKey;
-        if (musicClip != null)
-        {
-            AudioManager.PlayMusic(musicClip, true);
-        }
         if (canvasGroup != null)
         {
-            StartCoroutine(FadeIn());
-        }
-        else
-        {
-            guiMain.SetActive(true);
+            FadeIn();
         }
     }
-    public override void onEnter()
+    void FadeIn()
     {
-        base.onEnter();
-        if (isFirst)
-        {
-            isFirst = false;
-            init();
-        }
-        onResume();
-    }
-    public override void onExit()
-    {
-        base.onExit();
-        onSuspend();
-    }
-    IEnumerator FadeIn()
-    {
-        guiMain.SetActive(true);
         canvasGroup.alpha = 0;
         canvasGroup.interactable = false;
-        while (canvasGroup.alpha < 1)
-        {
-            canvasGroup.alpha += Time.deltaTime / timeIn;
-            yield return null;
-        }
-        canvasGroup.interactable = true;
+        Hashtable ht = iTween.Hash("from", 0, "to", 1, "time", timeIn, "onupdate", "UpdateAlphaCanvas", "onComplete", "FadeInFinish");
+        iTween.ValueTo(gameObject, ht);
     }
-    IEnumerator FadeOut()
+    void FadeOut()
     {
         canvasGroup.interactable = false;
-        while (canvasGroup.alpha > 0)
-        {
-            canvasGroup.alpha -= Time.deltaTime / timeOut;
-            yield return null;
-        }
+        Hashtable ht = iTween.Hash("from", 1, "to", 0, "time", timeOut, "onupdate", "UpdateAlphaCanvas", "onComplete", "FadeOutFinish");
+        iTween.ValueTo(gameObject, ht);
+    }
+    void UpdateAlphaCanvas(float value)
+    {
+        canvasGroup.alpha = value;
+    }
+    protected virtual void FadeInFinish()
+    {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+    }
+    protected virtual void FadeOutFinish()
+    {
         guiMain.SetActive(false);
     }
 }

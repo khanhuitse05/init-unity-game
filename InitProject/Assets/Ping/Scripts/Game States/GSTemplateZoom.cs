@@ -6,96 +6,56 @@ using UnityEngine;
 //TODO: a game state sample
 ////////////////////////////////////////////////////////
 
-public class GSTemplateZoom : IState
+public class GSTemplateZoom : GSTemplate
 {
-    public GameObject guiMain;
-    public AudioClip musicClip;
-    bool isFirst;
-    CanvasGroup canvasGroup;
-    protected Vector3 scaleEffect = new Vector3(3, 3, 3);
-    protected float timeIn = 0.4f;
-    protected float timeOut = 0.4f;
+    protected CanvasGroup canvasGroup;
+    protected Vector3 scaleStart = new Vector3(0.7f, 0.7f, 0.7f);
+    protected Vector3 scaleEnd = new Vector3(0.9f, 0.9f, 0.9f);
+    protected float timeIn = 0.3f;
+    protected float timeOut = 0.2f;
     protected override void Awake()
     {
         base.Awake();
         canvasGroup = guiMain.GetComponent<CanvasGroup>();
-        guiMain.SetActive(false);
-        isFirst = true;
-    }
-    /// <summary>
-    /// One time when start
-    /// </summary>
-    protected virtual void init()
-    {
-    }
-    protected virtual void onBackKey()
-    {
     }
     public override void onSuspend()
     {
-        base.onSuspend();
         GameStatesManager.onBackKey = null;
-        StartCoroutine(FadeOut());
+        FadeOut();
     }
     public override void onResume()
     {
         base.onResume();
-        GameStatesManager.Instance.InputProcessor = guiMain;
-        GameStatesManager.onBackKey = onBackKey;
-        if (musicClip != null)
-        {
-            AudioManager.PlayMusic(musicClip, true);
-        }
-        StartCoroutine(FadeIn());
+        FadeIn();
     }
-    public override void onEnter()
+    protected virtual void FadeIn()
     {
-        base.onEnter();
-        if (isFirst)
-        {
-            isFirst = false;
-            init();
-        }
-        onResume();
-    }
-    public override void onExit()
-    {
-        base.onExit();
-        onSuspend();
-    }
-    public virtual void ShowContent()
-    {
-    }
-
-    public virtual void HideContent()
-    {
-    }
-    IEnumerator FadeIn()
-    {
-        yield return new WaitForSeconds(timeOut);
         guiMain.SetActive(true);
         canvasGroup.interactable = false;
-        guiMain.transform.localScale = scaleEffect;
+        // scale effect
+        guiMain.transform.localScale = scaleStart;
         iTween.ScaleTo(guiMain, Vector3.one, timeIn);
-        while (canvasGroup.alpha < 1)
-        {
-            canvasGroup.alpha += Time.fixedDeltaTime / timeIn;
-            yield return null;
-        }
+        // alpha effect
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
-        ShowContent();
+        FadeInFinish();
     }
-    IEnumerator FadeOut()
+    protected virtual void FadeOut()
     {
-        HideContent();
         canvasGroup.interactable = false;
-        iTween.ScaleTo(guiMain, scaleEffect, timeIn);
-        while (canvasGroup.alpha > 0)
-        {
-            canvasGroup.alpha -= Time.fixedDeltaTime / timeOut;
-            yield return null;
-        }
+        iTween.ScaleTo(guiMain, scaleEnd, timeOut);
+        Hashtable ht = iTween.Hash("from", 1, "to", 0, "time", timeOut / 2, "onupdate", "UpdateAlphaCanvas", "onComplete", "FadeOutFinish");
+        iTween.ValueTo(gameObject, ht);
+    }
+    void UpdateAlphaCanvas(float value)
+    {
+        canvasGroup.alpha = value;
+    }
+    protected virtual void FadeInFinish()
+    {
+    }
+    protected virtual void FadeOutFinish()
+    {
         guiMain.SetActive(false);
     }
 }

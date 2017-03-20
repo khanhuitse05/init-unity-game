@@ -9,6 +9,7 @@ public class GameStatesManager : MonoBehaviour
     public static bool enableBackKey = true;
     public GameObject InputProcessor { get; set; }
     public static Action onBackKey { get; set; }
+    public static Action onCheatState { get; set; }
     public StateMachine stateMachine;
     public IState defaultState;
     void Awake()
@@ -28,6 +29,28 @@ public class GameStatesManager : MonoBehaviour
                 onBackKey();
             }
         }
+#if !LIVE
+#if UNITY_EDITOR
+        if (onCheatState != null && Input.GetKeyDown(KeyCode.V))
+        {
+            onCheatState();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            OnCheat();
+            PopupManager.Instance.InitMesage("On Cheat()");
+        }
+#else
+        if (onCheatState != null && Input.touches.Length == 3)
+        {
+            onCheatState();
+        }
+        if (Input.touches.Length == 4)
+        {
+            OnCheat();
+        }
+#endif
+#endif
     }
 
     public IEnumerator checkInternetConnection(Action<bool> action)
@@ -42,5 +65,8 @@ public class GameStatesManager : MonoBehaviour
             action(true);
         }
     }
+    public void OnCheat()
+    {
 
+    }
 }
