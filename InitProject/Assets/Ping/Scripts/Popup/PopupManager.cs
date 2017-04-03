@@ -24,19 +24,19 @@ public class PopupManager : MonoBehaviour
     void Update()
     {
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             PopupManager.Instance.InitInfoPopUp("Cheat Show Popup", null);
         }
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.F6))
         {
             PopupManager.Instance.InitYesNoPopUp("Cheat Show Popup", null, null);
         }
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.F7))
         {
-            PopupManager.Instance.InitMesage("Date Time Now: " + DateTime.Now.ToUniversalTime());
+            PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.F8))
         {
             if (LoadingUI.activeSelf == false)
             {
@@ -72,7 +72,7 @@ public class PopupManager : MonoBehaviour
         InfoPopUpComponent script = popup.GetComponent<InfoPopUpComponent>();
         script.Init(message, ok, _ok);
     }
-    public void InitMesage(string message)
+    public void InitMessage(string message)
     {
         GameObject popup = null;
         popup = GameObject.Instantiate(MesagePopUpPrefab) as GameObject;
@@ -81,12 +81,12 @@ public class PopupManager : MonoBehaviour
         popup.transform.localPosition = Vector3.zero;
         popup.transform.localScale = Vector3.one;
         MessagePopupComponent script = popup.GetComponent<MessagePopupComponent>();
-        script.Init(message);
+        float _size = script.Init(message);
         for (int i = 0; i < listMessage.Count; i++)
         {
             if (listMessage[i] != null)
             {
-                listMessage[i].OnMoveUp();
+                listMessage[i].OnMoveUp(_size);
             }
         }
         listMessage.Add(script);

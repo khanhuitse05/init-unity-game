@@ -31,14 +31,13 @@ public class GameStatesManager : MonoBehaviour
         }
 #if !LIVE
 #if UNITY_EDITOR
-        if (onCheatState != null && Input.GetKeyDown(KeyCode.V))
+        if (onCheatState != null && Input.GetKeyDown(KeyCode.F2))
         {
             onCheatState();
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             OnCheat();
-            PopupManager.Instance.InitMesage("On Cheat()");
         }
 #else
         if (onCheatState != null && Input.touches.Length == 3)
@@ -67,6 +66,6 @@ public class GameStatesManager : MonoBehaviour
     }
     public void OnCheat()
     {
-
+        PopupManager.Instance.InitMessage("On Cheat()");
     }
 }

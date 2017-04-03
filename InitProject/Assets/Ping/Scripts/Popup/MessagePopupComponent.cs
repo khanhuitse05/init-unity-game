@@ -6,14 +6,17 @@ public class MessagePopupComponent : MonoBehaviour
 {
     string message;
     public Text messageLbl;
+    public Text guiLbl;
     public Animator animator;
     public float timeAlive;
-    public void Init(string message)
+    public float Init(string message)
     {
         this.message = message;
+        guiLbl.text = this.message;
         messageLbl.text = this.message;
-        currentPos = transform.position;
+        Canvas.ForceUpdateCanvases();
         StartCoroutine(ShowPopUp());
+        return guiLbl.rectTransform.sizeDelta.y;
     }
 
     IEnumerator ShowPopUp()
@@ -26,10 +29,9 @@ public class MessagePopupComponent : MonoBehaviour
         PopupManager.Instance.OnDestroyMessagePopup(this);
         Destroy(gameObject);
     }
-    public void OnMoveUp()
+    public void OnMoveUp(float _size)
     {
-        currentPos.y += 2.0f;
-        iTween.MoveTo(gameObject, currentPos, 0.1f);
+        Vector3 _pos = guiLbl.rectTransform.localPosition;
+        guiLbl.rectTransform.localPosition = new Vector3(_pos.x, _pos.y + _size + 50, _pos.z);
     }
-    Vector3 currentPos;
 }
