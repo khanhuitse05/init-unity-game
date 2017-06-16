@@ -34,10 +34,6 @@ public class PopupManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F7))
         {
-            PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
-        }
-        if (Input.GetKeyDown(KeyCode.F8))
-        {
             if (LoadingUI.activeSelf == false)
             {
                 PopupManager.Instance.ShowLoading("Cheat Loading...");
@@ -46,6 +42,10 @@ public class PopupManager : MonoBehaviour
             {
                 PopupManager.Instance.HideLoading();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
         }
 #endif
     }

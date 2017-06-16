@@ -51,7 +51,7 @@ public class StateMachine : MonoBehaviour
         state.onEnter();
     }
 
-    public void PopState()
+    public void PopState(IState stateDefault)
     {
         IState prevState = null;
         if (stateStack.Count > 0)
@@ -59,10 +59,18 @@ public class StateMachine : MonoBehaviour
             prevState = stateStack.Pop();
             prevState.onExit();
         }
-        IState thisState = stateStack.Peek();
-        thisState.onResume();
+        if (stateStack.Count > 0)
+        {
+            IState thisState = stateStack.Peek();
+            thisState.onResume();
+        }
+        else
+        {
+            stateStack.Push(stateDefault);
+            stateDefault.onEnter();
+        }
     }
-    
+
     public IState currentState
     {
         get
