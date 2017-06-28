@@ -1,236 +1,129 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    static private AudioObject[] audioObject;
-    static public AudioManager audioManager;
+    private List<AudioSource> audioSourceList = new List<AudioSource>();
 
-    public float minFallOffRange = 10;
+    private static float musicVolume = .75f;
+    private static float sfxVolume = .75f;
 
-    public AudioClip[] musicList;
+    public List<AudioClip> musicList;
     public bool playMusic = true;
     public bool shuffle = false;
-    private static AudioSource musicSource;
+    private int currentTrackID = 0;
+    private AudioSource musicSource;
 
-    static bool mute = false;
 
-    public static bool Mute { get { return mute; } set { mute = value; } }
+    private static AudioManager instance;
 
-    private GameObject thisObj;
+    public static void Init()
+    {
+        if (instance != null) return;
+        GameObject obj = new GameObject();
+        obj.name = "AudioManager";
+        obj.AddComponent<AudioManager>();
+    }
 
     void Awake()
     {
-        thisObj = gameObject;
-        if (playMusic)
+        if (instance != null)
         {
-            GameObject musicObj = new GameObject();
-            musicObj.name = "MusicSource";
-            musicObj.transform.SetParent(this.transform);
-            musicObj.transform.localPosition = Vector3.zero;
-            musicSource = musicObj.AddComponent<AudioSource>();
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
+
+        if (playMusic && musicList != null && musicList.Count > 0)
+        {
+            musicSource = gameObject.AddComponent<AudioSource>();
             musicSource.loop = false;
             musicSource.playOnAwake = false;
+            musicSource.volume = musicVolume;
+
             musicSource.ignoreListenerVolume = true;
+
+            if (shuffle) currentTrackID = Random.Range(0, musicList.Count);
+            musicSource.clip = musicList[currentTrackID];
+            musicSource.Play();
         }
 
-        audioObject = new AudioObject[10];
-        for (int i = 0; i < audioObject.Length; i++)
+        audioSourceList = new List<AudioSource>();
+        for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
-            obj.name = "AudioSource";
+            obj.name = "AudioSource" + (i + 1);
 
             AudioSource src = obj.AddComponent<AudioSource>();
             src.playOnAwake = false;
             src.loop = false;
-            src.minDistance = minFallOffRange;
 
-            Transform t = obj.transform;
-            t.SetParent(thisObj.transform);
+            obj.transform.parent = transform;
+            obj.transform.localPosition = Vector3.zero;
 
-            audioObject[i] = new AudioObject(src, t);
+            audioSourceList.Add(src);
         }
-        if (audioManager == null) audioManager = this;
+
+        AudioListener.volume = sfxVolume;
     }
 
-    static public void Init()
+
+    void Update()
     {
-        if (audioManager == null)
+        if (musicSource != null && !musicSource.isPlaying)
         {
-            GameObject objParent = new GameObject();
-            objParent.name = "AudioManager";
-            audioManager = objParent.AddComponent<AudioManager>();
+            if (shuffle) musicSource.clip = musicList[Random.Range(0, musicList.Count)];
+            else
+            {
+                musicSource.clip = musicList[currentTrackID];
+                currentTrackID += 1;
+                if (currentTrackID == musicList.Count) currentTrackID = 0;
+            }
+            musicSource.Play();
         }
     }
+
+    void OnPlayClick() { _PlaySound(soundClick); }
+    public AudioClip soundClick;
 
     //check for the next free, unused audioObject
-    static private int GetUnusedAudioObject()
+    private int GetUnusedAudioSourceID()
     {
-        for (int i = 0; i < audioObject.Length; i++)
+        for (int i = 0; i < audioSourceList.Count; i++)
         {
-            if (!audioObject[i].inUse)
-            {
-                return i;
-            }
+            if (!audioSourceList[i].isPlaying) return i;
         }
-        //if everything is used up, use item number zero
-        return 0;
+        return 0;   //if everything is used up, use item number zero
     }
 
-    //this is a 3D sound that has to be played at a particular position following a particular event
-    static public void PlaySound(AudioClip clip, Vector3 pos)
+    //call to play a specific clip
+    public static void PlaySound(AudioClip clip)
     {
-        if (audioManager == null) Init();
-        if (mute)
-            return;
-        int ID = GetUnusedAudioObject();
-        audioObject[ID].inUse = true;
-        audioObject[ID].thisT.position = pos;
-        audioObject[ID].source.clip = clip;
-        audioObject[ID].source.Play();
-
-        float duration = audioObject[ID].source.clip.length;
-
-        audioManager.StartCoroutine(audioManager.ClearAudioObject(ID, duration));
+        if (instance == null) Init();
+        instance._PlaySound(clip);
+    }
+    public void _PlaySound(AudioClip clip)
+    {
+        int ID = GetUnusedAudioSourceID();
+        audioSourceList[ID].clip = clip;
+        audioSourceList[ID].Play();
     }
 
-    //this is a 3D sound that has to be played at a particular position following a particular event
-    static public int PlaySound(AudioClip clip, Transform t, bool loop)
+    public static void SetSFXVolume(float val)
     {
-        if (audioManager == null) Init();
-        int ID = GetUnusedAudioObject();
-
-        audioObject[ID].inUse = true;
-        audioObject[ID].thisT.SetParent(t);
-        audioObject[ID].thisT.localPosition = Vector3.zero;
-        audioObject[ID].source.loop = loop;
-        audioObject[ID].source.clip = clip;
-        audioObject[ID].source.Play();
-
-        if (!loop)
-        {
-        }
-
-        return ID;
-    }
-
-    //this no position has been given, assume this is a 2D sound
-    static public int PlaySound(AudioClip clip)
-    {
-        if (audioManager == null) Init();
-
-        int ID = GetUnusedAudioObject();
-
-        audioObject[ID].inUse = true;
-        audioObject[ID].source.loop = false;
-        audioObject[ID].source.clip = clip;
-        audioObject[ID].source.Play();
-        return ID;
-    }
-
-    static public int PlayMusic(AudioClip clip, bool loop)
-    {
-        if (clip == null)
-            return -1;
-        if (audioManager == null) Init();
-        if (mute)
-            return -1;
-
-        if (musicSource != null)
-        {
-            musicSource.clip = clip;
-            musicSource.loop = loop;
-            musicSource.Play();
-            return 1;
-        }
-
-        return -1;
-    }
-
-    static public void StopMusic()
-    {
-        if (musicSource != null)
-        {
-            musicSource.Stop();
-        }
-    }
-
-    static public int PlayLoopedSound(AudioClip clip)
-    {
-        if (audioManager == null) Init();
-        if (mute)
-            return -1;
-
-        int ID = GetUnusedAudioObject();
-
-        audioObject[ID].inUse = true;
-
-        audioObject[ID].source.clip = clip;
-        audioObject[ID].source.loop = true;
-        audioObject[ID].source.Play();
-
-        return ID;
-    }
-
-    static public bool IsPlaying(int index)
-    {
-        if (index >= 0 && index < audioObject.Length)
-        {
-            return audioObject[index].source.isPlaying;
-        }
-        return false;
-    }
-
-    static public AudioObject GetAudioAt(int index)
-    {
-        if (index >= 0 && index < audioObject.Length)
-        {
-            return audioObject[index];
-        }
-        return null;
-    }
-
-    static public void StopAudioAt(int index)
-    {
-        if (index >= 0 && index < audioObject.Length)
-        {
-            if (audioObject[index].inUse)
-            {
-                audioObject[index].source.Stop();
-                audioObject[index].inUse = false;
-                audioObject[index].thisT.SetParent(audioManager.transform);
-            }
-        }
-    }
-
-    //function call to clear flag of an audioObject, indicate it's is free to be used again
-    private IEnumerator ClearAudioObject(int ID, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-
-        audioObject[ID].inUse = false;
-        audioObject[ID].thisT.SetParent(audioManager.transform);
-    }
-
-    static public void SetSFXVolume(float val)
-    {
+        sfxVolume = val;
         AudioListener.volume = val;
-        if (AudioManager.musicSource != null)
-        {
-            AudioManager.musicSource.volume = val;
-        }
     }
-}
-[System.Serializable]
-public class AudioObject
-{
-    public AudioSource source;
-    public bool inUse = false;
-    public Transform thisT;
 
-    public AudioObject(AudioSource src, Transform t)
+    public static void SetMusicVolume(float val)
     {
-        source = src;
-        thisT = t;
+        musicVolume = val;
+        if (instance && instance.musicSource) instance.musicSource.volume = val;
     }
+
+    public static float GetMusicVolume() { return musicVolume; }
+    public static float GetSFXVolume() { return sfxVolume; }
 }

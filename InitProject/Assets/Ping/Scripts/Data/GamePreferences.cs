@@ -4,7 +4,8 @@ using System;
 public class Setting
 {
     public string version;
-    public float soundVolume;
+    public float sfxVolume;
+    public float musicVolume;
     public bool enableTutorial;
     public int rate;
     public int highScore;
@@ -15,6 +16,7 @@ public class Setting
         if (newScore > highScore)
         {
             highScore = newScore;
+            GamePreferences.SaveSetting();
         }
     }
     public void updateStar(int _star)
@@ -24,7 +26,8 @@ public class Setting
     public Setting()
     {
         version = GameConstants.gameVersion;
-        soundVolume = 1.0f;
+        musicVolume = 0.75f;
+        sfxVolume = 0.75f;
         enableTutorial = true;
         rate = 0;
         highScore = 0;
@@ -34,18 +37,11 @@ public class Setting
 
 public class GamePreferences : MonoBehaviour
 {
-
-    static GamePreferences _instance;
-    public static GamePreferences Instance { get { return _instance; } }
-    void Awake()
-    {
-        _instance = this;
-    }
     /// <summary>
     /// Setting
     /// </summary>
-    public Setting setting { get; set; }
-    public Setting LoadSetting()
+    public static Setting setting { get; set; }
+    public static Setting LoadSetting()
     {
         setting = SaveGameManager.loadData<Setting>(GameTags.settingDataKey);
         if (setting == null)
@@ -55,7 +51,7 @@ public class GamePreferences : MonoBehaviour
         }
         return setting;
     }
-    public void SaveSetting()
+    public static void SaveSetting()
     {
         SaveGameManager.saveData<Setting>(GameTags.settingDataKey, setting);
     }

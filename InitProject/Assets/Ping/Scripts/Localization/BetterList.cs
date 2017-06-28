@@ -198,7 +198,11 @@ public class BetterList<T>
     /// Clear the array by resetting its size to zero. Note that the memory is not actually released.
     /// </summary>
 
-    public void Clear() { size = 0; }
+    public void Clear()
+    {
+        for (int i = 0; i < size; i++) RemoveAt(i);
+        size = 0;
+    }
 
     /// <summary>
     /// Clear the array and release the used memory.
