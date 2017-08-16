@@ -5,82 +5,36 @@ using System.Collections.Generic;
 
 public class PopupManager : MonoBehaviour
 {
-    static PopupManager _instance;
-    public static PopupManager Instance { get { return _instance; } }
+    public static PopupManager Instance { get; private set; }
     void Awake()
     {
-        _instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
-    public Transform popUpRoot;
-    public GameObject YesNoPopUpPrefab;
-    public GameObject InfoPopUpPrefab;
-    public GameObject MesagePopUpPrefab;
-    public GameObject LoadingUI;
-    public Text txtLoading;
-    List<MessagePopupComponent> listMessage = new List<MessagePopupComponent>();
-
-    void Update()
+    #region Popup
+    public Transform root;
+    public GameObject prefabConfirmPopup;
+    public GameObject PrefabInfoPopup;
+    public GameObject prefabMesage;
+    List<MessageComponent> listMessage = new List<MessageComponent>();
+    
+    public void InitInfoPopUp(string message, Action ok, string _ok = "OK")
     {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            PopupManager.Instance.InitInfoPopUp("Cheat Show Popup", null);
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            PopupManager.Instance.InitYesNoPopUp("Cheat Show Popup", null, null);
-        }
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            if (LoadingUI.activeSelf == false)
-            {
-                PopupManager.Instance.ShowLoading("Cheat Loading...");
-            }
-            else
-            {
-                PopupManager.Instance.HideLoading();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F8))
-        {
-            PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
-        }
-#endif
+        GameObject popup = SpawnPopup(PrefabInfoPopup);
+        PopupInfoComponent script = popup.GetComponent<PopupInfoComponent>();
+        script.Init(message, ok, _ok);
     }
     public void InitYesNoPopUp(string message, Action yes, Action no, string _yes = "YES", string _no = "NO")
     {
-        GameObject popup = null;
-        popup = GameObject.Instantiate(YesNoPopUpPrefab) as GameObject;
-        popup.SetActive(true);
-        popup.transform.SetParent(popUpRoot.transform);
-        popup.transform.localPosition = Vector3.zero;
-        popup.transform.localScale = Vector3.one;
-        YesNoPopUpComponent script = popup.GetComponent<YesNoPopUpComponent>();
+        GameObject popup = SpawnPopup(prefabConfirmPopup);
+        PopupConfirmComponent script = popup.GetComponent<PopupConfirmComponent>();
         script.Init(message, yes, no, _yes, _no);
-    }
-
-    public void InitInfoPopUp(string message, Action ok, string _ok = "OK")
-    {
-        GameObject popup = null;
-        popup = GameObject.Instantiate(InfoPopUpPrefab) as GameObject;
-        popup.SetActive(true);
-        popup.transform.SetParent(popUpRoot.transform);
-        popup.transform.localPosition = Vector3.zero;
-        popup.transform.localScale = Vector3.one;
-        InfoPopUpComponent script = popup.GetComponent<InfoPopUpComponent>();
-        script.Init(message, ok, _ok);
     }
     public void InitMessage(string message)
     {
-        GameObject popup = null;
-        popup = GameObject.Instantiate(MesagePopUpPrefab) as GameObject;
-        popup.SetActive(true);
-        popup.transform.SetParent(popUpRoot.transform);
-        popup.transform.localPosition = Vector3.zero;
-        popup.transform.localScale = Vector3.one;
-        MessagePopupComponent script = popup.GetComponent<MessagePopupComponent>();
+        GameObject popup = SpawnPopup(prefabMesage);
+        MessageComponent script = popup.GetComponent<MessageComponent>();
         float _size = script.Init(message);
         for (int i = 0; i < listMessage.Count; i++)
         {
@@ -91,10 +45,25 @@ public class PopupManager : MonoBehaviour
         }
         listMessage.Add(script);
     }
-    public void OnDestroyMessagePopup(MessagePopupComponent _item)
+    public void OnDestroyMessagePopup(MessageComponent _item)
     {
         listMessage.Remove(_item);
     }
+
+    GameObject SpawnPopup(GameObject prefab)
+    {
+        GameObject popup = GameObject.Instantiate(prefab) as GameObject;
+        popup.SetActive(true);
+        popup.transform.SetParent(root);
+        popup.transform.localPosition = Vector3.zero;
+        popup.transform.localScale = Vector3.one;
+        return popup;
+    }
+    #endregion
+
+    #region Loading
+    public GameObject LoadingUI;
+    public Text txtLoading;
     bool oldBackKeyState = false;
     bool revertBackKeyState = false;
     public void SetTextLoading(string _value)
@@ -121,4 +90,24 @@ public class PopupManager : MonoBehaviour
         }
         LoadingUI.SetActive(false);
     }
+#endregion
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.F5)) PopupManager.Instance.InitInfoPopUp("Cheat Show Popup", null);
+        if (Input.GetKeyDown(KeyCode.F6)) PopupManager.Instance.InitYesNoPopUp("Cheat Show Popup", null, null);
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            if (LoadingUI.activeSelf == false) PopupManager.Instance.ShowLoading("Cheat Loading...");
+            else PopupManager.Instance.HideLoading();
+        }
+        if (Input.GetKeyDown(KeyCode.F8)) PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
+#endif
+    }
+    
 }

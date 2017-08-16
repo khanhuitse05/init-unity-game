@@ -15,17 +15,6 @@ public class GSResult : GSTemplateZoom
     public override void onEnter()
     {
         base.onEnter();
-        score = parameters[GameConstants.key_result_score] as ResultScore;
-        if (score != null)
-        {
-            txtCurrentScore.text = score.curentScore.ToString();
-            txtHighScore.text = score.highScore.ToString();
-        }
-        else
-        {
-            txtCurrentScore.text = "";
-            txtHighScore.text = GamePreferences.setting.highScore.ToString();
-        }
     }
     public override void onResume()
     {
@@ -42,10 +31,6 @@ public class GSResult : GSTemplateZoom
     public override void onBackKey()
     {
     }
-    //
-    ResultScore score;
-    public Text txtCurrentScore;
-    public Text txtHighScore;
     public void OnClickPlay()
     {
         GameStatesManager.SwitchState(GSGamePlay.Instance);
@@ -54,9 +39,4 @@ public class GSResult : GSTemplateZoom
     {
         GameStatesManager.SwitchState(GSHome.Instance);
     }
-}
-public class ResultScore
-{
-    public int curentScore;
-    public int highScore;
 }

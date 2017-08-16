@@ -15,7 +15,6 @@ public class GSGamePlay : GSTemplateZoom
     public override void onEnter()
     {
         base.onEnter();
-        count = 0;
     }
     public override void onResume()
     {
@@ -31,23 +30,5 @@ public class GSGamePlay : GSTemplateZoom
     }
     public override void onBackKey()
     {
-    }
-
-    //
-    public Text txtTime;
-    float count;
-    private void Update()
-    {
-        count += Time.deltaTime;
-        txtTime.text = "" + (int)count + "s";
-    }
-    public void ClickFinish()
-    {
-        GamePreferences.setting.updateHighScore((int)count);
-        ResultScore _score = new ResultScore();
-        _score.curentScore = (int)count;
-        _score.highScore = GamePreferences.setting.highScore;
-        GSResult.Instance.parameters[GameConstants.key_result_score] = _score;
-        GameStatesManager.SwitchState(GSResult.Instance);
     }
 }

@@ -13,7 +13,6 @@ public class GSLoading : GSTemplate
     protected override void init()
     {
         GamePreferences.LoadSetting();
-        LocalizationData.LoadLocalization();
         Invoke("Finish", 2);
     }
     public override void onEnter()

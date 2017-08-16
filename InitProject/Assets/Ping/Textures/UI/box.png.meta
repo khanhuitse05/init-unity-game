@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 257bd34bee93f294686a8447f3dffdac
-timeCreated: 1464770482
-licenseType: Pro
+timeCreated: 1502254696
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 4
@@ -75,6 +75,14 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Android
+    maxTextureSize: 128
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Samsung TV
     maxTextureSize: 128
     textureFormat: -1
     textureCompression: 0
