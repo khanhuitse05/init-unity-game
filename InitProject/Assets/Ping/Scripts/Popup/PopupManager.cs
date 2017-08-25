@@ -18,7 +18,6 @@ namespace Ping
         public GameObject prefabConfirmPopup;
         public GameObject PrefabInfoPopup;
         public GameObject prefabMesage;
-        List<MessageComponent> listMessage = new List<MessageComponent>();
 
         public void InitInfoPopUp(string message, Action ok, string _ok = "OK")
         {
@@ -36,21 +35,9 @@ namespace Ping
         {
             GameObject popup = SpawnPopup(prefabMesage);
             MessageComponent script = popup.GetComponent<MessageComponent>();
-            float _size = script.Init(message);
-            for (int i = 0; i < listMessage.Count; i++)
-            {
-                if (listMessage[i] != null)
-                {
-                    listMessage[i].OnMoveUp(_size);
-                }
-            }
-            listMessage.Add(script);
+            script.Init(message);            
         }
-        public void OnDestroyMessagePopup(MessageComponent _item)
-        {
-            listMessage.Remove(_item);
-        }
-
+        
         GameObject SpawnPopup(GameObject prefab)
         {
             GameObject popup = GameObject.Instantiate(prefab) as GameObject;
