@@ -2,76 +2,88 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class IState : MonoBehaviour
+namespace Ping
 {
-    public ParameterWrapper parameters = new ParameterWrapper();
-    protected virtual void Awake()
-    { }
-    public virtual void onSuspend()
-    { }
-    public virtual void onResume()
-    { }
-    public virtual void onEnter()
-    { }
-    public virtual void onExit()
+    public class StateMachine : MonoBehaviour
     {
-        parameters.Clear();
-    }
-}
+        Stack<IState> stateStack = new Stack<IState>();
+        public void PushState(IState state, SwipeEffect effect = SwipeEffect.Active)
+        {
+            IState prevState = null;
+            if (stateStack.Count > 0)
+            {
+                prevState = stateStack.Peek();
+                prevState.onSuspend(effect);
+            }
+            stateStack.Push(state);
+            state.onEnter(effect);
+        }
 
-public class StateMachine : MonoBehaviour
-{
-    Stack<IState> stateStack = new Stack<IState>();
-    public void PushState(IState state)
-    {
-        IState prevState = null;
-        if (stateStack.Count > 0)
+        public void SwitchState(IState state, SwipeEffect effect = SwipeEffect.Active)
         {
-            prevState = stateStack.Peek();
-            prevState.onSuspend();
+            IState prevState = null;
+            while (stateStack.Count > 0)
+            {
+                prevState = stateStack.Pop();
+                prevState.onExit(effect);
+            }
+            stateStack.Push(state);
+            state.onEnter(effect);
         }
-        stateStack.Push(state);
-        state.onEnter();
-    }
 
-    public void SwitchState(IState state)
-    {
-        IState prevState = null;
-        while (stateStack.Count > 0)
+        public void PopState(IState stateDefault = null, SwipeEffect effect = SwipeEffect.Active)
         {
-            prevState = stateStack.Pop();
-            prevState.onExit();
+            IState prevState = null;
+            if (stateStack.Count > 0)
+            {
+                prevState = stateStack.Pop();
+                prevState.onExit(effect);
+            }
+            if (stateStack.Count > 0)
+            {
+                IState thisState = stateStack.Peek();
+                thisState.onResume(effect);
+            }
+            else
+            {
+                stateStack.Push(stateDefault);
+                stateDefault.onEnter(effect);
+            }
         }
-        stateStack.Push(state);
-        state.onEnter();
-    }
 
-    public void PopState(IState stateDefault = null)
-    {
-        IState prevState = null;
-        if (stateStack.Count > 0)
+        public IState currentState
         {
-            prevState = stateStack.Pop();
-            prevState.onExit();
-        }
-        if (stateStack.Count > 0)
-        {
-            IState thisState = stateStack.Peek();
-            thisState.onResume();
-        }
-        else
-        {
-            stateStack.Push(stateDefault);
-            stateDefault.onEnter();
+            get
+            {
+                if (stateStack.Count > 0) return stateStack.Peek();
+                else return null;
+            }
         }
     }
-
-    public IState currentState
+    public abstract class IState : MonoBehaviour
     {
-        get
+        public ParameterWrapper parameters = new ParameterWrapper();
+
+        public virtual void onResume(SwipeEffect effect)
         {
-            if (stateStack.Count > 0) return stateStack.Peek();
-            else return null;
         }
+        public virtual void onSuspend(SwipeEffect effect)
+        {
+        }
+        public virtual void onEnter(SwipeEffect effect)
+        {
+        }
+        public virtual void onExit(SwipeEffect effect)
+        {
+            parameters.Clear();
+        }
+        protected virtual void Awake() { }
+    }
+    public enum SwipeEffect
+    {
+        Active,
+        Slide,
+        Fade,
+        Zome
     }
 }

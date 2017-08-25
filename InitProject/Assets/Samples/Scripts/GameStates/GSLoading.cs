@@ -1,44 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-public class GSLoading : GSTemplate
+namespace Ping
 {
-    public static GSLoading Instance { get; private set; }
-    protected override void Awake()
+    public class GSLoading : GSTemplate
     {
-        base.Awake();
-        Instance = this;
-    }
-    protected override void init()
-    {
-        GamePreferences.LoadSetting();
-        Invoke("Finish", 2);
-    }
-    public override void onEnter()
-    {
-        base.onEnter();
-    }
-    public override void onResume()
-    {
-        base.onResume();
-    }
-    public override void onSuspend()
-    {
-        base.onSuspend();
-    }
-    public override void onExit()
-    {
-        base.onExit();
-    }
-    public override void onBackKey()
-    {
-    }
+        public static GSLoading Instance { get; private set; }
+        protected override void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+        protected override void init()
+        {
+        }
+        public override void onEnableState(SwipeEffect effect)
+        {
+            base.onEnableState(effect);
+        }
+        public override void onDisableState(SwipeEffect effect)
+        {
+            base.onDisableState(effect);
+        }
+        public override void onBackKey()
+        {
 
-    void Finish()
-    {
-        GameStatesManager.SwitchState(GSHome.Instance);
-        Destroy(gameObject);
+        }
     }
 }
-

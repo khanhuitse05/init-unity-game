@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
-public class LoadSceneFromOther : MonoBehaviour {
-    public static bool isLoad = false;
-	// Use this for initialization
-	void Start () {
-        if (LoadSceneFromOther.isLoad == false)
+namespace Ping
+{
+    public class LoadSceneFromOther : MonoBehaviour
+    {
+        public static bool isLoad = false;
+        // Use this for initialization
+        void Start()
         {
-            LoadSceneFromOther.isLoad = true;
-            SceneManager.LoadScene(0);
+            if (LoadSceneFromOther.isLoad == false)
+            {
+                LoadSceneFromOther.isLoad = true;
+                SceneManager.LoadScene(0);
+            }
         }
-	}
+    }
 }

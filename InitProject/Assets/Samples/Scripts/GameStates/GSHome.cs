@@ -1,43 +1,45 @@
 ﻿using UnityEngine;
-public class GSHome : GSTemplateZoom
+
+namespace Ping
 {
-    public static GSHome Instance { get; private set; }
-    protected override void Awake()
+    public class GSHome : GSTemplate
     {
-        base.Awake();
-        Instance = this;
-    }
-    protected override void init()
-    {
-    }
-    public override void onEnter()
-    {
-        base.onEnter();
-    }
-    public override void onResume()
-    {
-        base.onResume();
-    }
-    public override void onSuspend()
-    {
-        base.onSuspend();
-    }
-    public override void onExit()
-    {
-        base.onExit();
-    }
-    public override void onBackKey()
-    {
-    }
+        public static GSHome Instance { get; private set; }
+        protected override void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+        protected override void init()
+        {
+        }
+        public override void onEnableState(SwipeEffect effect)
+        {
+            base.onEnableState(effect);
+        }
+        public override void onDisableState(SwipeEffect effect)
+        {
+            base.onDisableState(effect);
+        }
+        public override void onBackKey()
+        {
 
-    //
-    public void OnClickSetting()
-    {
-        GameStatesManager.PushState(GSSetting.Instance);
-    }
-
-    public void OnClickPlay()
-    {
-        GameStatesManager.SwitchState(GSGamePlay.Instance);
+        }
+        public void SwitchStateActive()
+        {
+            GameStatesManager.SwitchState(GSSetting.Instance, SwipeEffect.Active);
+        }
+        public void SwitchStateFade()
+        {
+            GameStatesManager.SwitchState(GSSetting.Instance, SwipeEffect.Fade);
+        }
+        public void SwitchStateZome()
+        {
+            GameStatesManager.SwitchState(GSSetting.Instance, SwipeEffect.Zome);
+        }
+        public void SwitchStateSlide()
+        {
+            GameStatesManager.SwitchState(GSSetting.Instance, SwipeEffect.Slide);
+        }
     }
 }

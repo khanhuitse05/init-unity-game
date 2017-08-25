@@ -1,37 +1,47 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class GSSetting : GSTemplateFade
+namespace Ping
 {
-    public static GSSetting Instance { get; private set; }
-    protected override void Awake()
+    public class GSSetting : GSTemplate
     {
-        base.Awake();
-        Instance = this;
-    }
-    protected override void init()
-    {
-    }
+        public static GSSetting Instance { get; private set; }
+        protected override void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+        protected override void init()
+        {
+        }
+        public override void onEnableState(SwipeEffect effect)
+        {
+            base.onEnableState(effect);
+        }
+        public override void onDisableState(SwipeEffect effect)
+        {
+            base.onDisableState(effect);
+        }
+        public override void onBackKey()
+        {
 
-    public override void onEnter()
-    {
-        base.onEnter();
+        }
+
+        //
+        public void SwitchStateActive()
+        {
+            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.Active);
+        }
+        public void SwitchStateFade()
+        {
+            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.Fade);
+        }
+        public void SwitchStateZome()
+        {
+            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.Zome);
+        }
+        public void SwitchStateSlide()
+        {
+            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.Slide);
+        }
     }
-    public override void onResume()
-    {
-        base.onResume();
-    }
-    public override void onSuspend()
-    {
-        base.onSuspend();
-    }
-    public override void onExit()
-    {
-        base.onExit();
-    }
-    public override void onBackKey()
-    {
-    }
-    
 }

@@ -2,50 +2,53 @@
 using System.IO;
 using System;
 
-public class JSONControll
+namespace Ping
 {
-    public static string LoadJsonFromFile(string filePath)
+    public class JSONControll
     {
-        try
+        public static string LoadJsonFromFile(string filePath)
         {
-            string json;
-            using (StreamReader r = new StreamReader(filePath))
+            try
             {
-                json = r.ReadToEnd();
+                string json;
+                using (StreamReader r = new StreamReader(filePath))
+                {
+                    json = r.ReadToEnd();
+                }
+                return json;
             }
-            return json;
+            catch (Exception error)
+            {
+                Debug.Log("Read Json File Error: " + error);
+                return null;
+            }
         }
-        catch (Exception error)
+        public static string jsonToBase64(string paramJson)
         {
-            Debug.Log("Read Json File Error: " + error);
-            return null;
+            try
+            {
+                SimpleJSON.JSONNode node = SimpleJSON.JSON.Parse(paramJson);
+                return node.SaveToBase64();
+            }
+            catch (Exception ex)
+            {
+                Utils.LogError(ex.Message);
+                return paramJson;
+            }
         }
-    }
-    public static string jsonToBase64(string paramJson)
-    {
-        try
-        {
-            SimpleJSON.JSONNode node = SimpleJSON.JSON.Parse(paramJson);
-            return node.SaveToBase64();
-        }
-        catch (Exception ex)
-        {
-            Utils.LogError(ex.Message);
-            return paramJson;
-        }
-    }
 
-    public static string base64ToJson(string paramBase64)
-    {
-        try
+        public static string base64ToJson(string paramBase64)
         {
-            SimpleJSON.JSONNode node = SimpleJSON.JSONNode.LoadFromBase64(paramBase64);
-            return node.ToString();
-        }
-        catch (Exception ex)
-        {
-            Utils.LogError(ex.Message);
-            return paramBase64;
+            try
+            {
+                SimpleJSON.JSONNode node = SimpleJSON.JSONNode.LoadFromBase64(paramBase64);
+                return node.ToString();
+            }
+            catch (Exception ex)
+            {
+                Utils.LogError(ex.Message);
+                return paramBase64;
+            }
         }
     }
 }

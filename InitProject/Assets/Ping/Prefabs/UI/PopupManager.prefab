@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageLbl: {fileID: 114310290222992864}
-  guiLbl: {fileID: 114912631580765770}
+  rect: {fileID: 0}
   animator: {fileID: 95783384069376936}
   timeAlive: 2
 --- !u!114 &114509106411650414
@@ -1669,9 +1669,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unable to connect to the InternetUnable to connect to the InternetUnable
-    to connect to the InternetUnable to connect to the InternetUnable to connect to
-    the InternetUnable to connect to the Internet
+  m_Text: 'Date Time Now: 8/25/2017 5:05:51 AM'
 --- !u!114 &114920578455082406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2540,7 +2538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -530}
+  m_AnchoredPosition: {x: 0, y: 71457.06}
   m_SizeDelta: {x: 500, y: 203.47505}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224986015212694912
