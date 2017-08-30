@@ -1,3 +1,3 @@
 # FrameWorkGame
-easy game, easy money
-First
+
+Easy Game, Easy Money
