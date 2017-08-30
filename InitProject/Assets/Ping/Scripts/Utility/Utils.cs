@@ -6,6 +6,13 @@ namespace Ping
 {
     public class Utils
     {
+        /// FPS
+        public const int _fps = 60;
+        public static void SetFPS()
+        {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = _fps;
+        }
         public static void Log(string paramLog)
         {
             Debug.Log(paramLog);
