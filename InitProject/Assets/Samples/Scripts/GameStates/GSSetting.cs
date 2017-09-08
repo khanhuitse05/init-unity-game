@@ -41,7 +41,7 @@ namespace Ping
         }
         public void SwitchStateSlide()
         {
-            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.Slide);
+            GameStatesManager.SwitchState(GSGamePlay.Instance, SwipeEffect.SlideRight);
         }
     }
 }

@@ -78,11 +78,13 @@ namespace Ping
             parameters.Clear();
         }
         protected virtual void Awake() { }
+        protected virtual void Update() { }
     }
     public enum SwipeEffect
     {
         Active,
-        Slide,
+        SlideLeft,
+        SlideRight,
         Fade,
         Zome
     }
