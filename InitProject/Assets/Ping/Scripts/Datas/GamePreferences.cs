@@ -36,7 +36,7 @@ namespace Ping
         }
     }
 
-    public class GamePreferences : MonoBehaviour
+    public class GamePreferences
     {
         /// <summary>
         /// Setting

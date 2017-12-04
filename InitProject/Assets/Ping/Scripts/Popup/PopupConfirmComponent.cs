@@ -9,24 +9,18 @@ namespace Ping
     {
         Action actionYes;
         Action actionNo;
-        string message;
-        string txtNo;
-        string txtYes;
         public Text messageLbl;
         public Text noLbl;
         public Text yesLbl;
 
-        public void Init(string message, Action yes, Action no, string _yes = "YES", string _no = "NO")
+        public void Init(string message, Action yes, Action no, string txtYes = "YES", string txtNo = "NO")
         {
-            this.message = message;
-            this.txtNo = _no;
-            this.txtYes = _yes;
             actionYes = yes;
             actionNo = no;
-            messageLbl.text = this.message;
-            yesLbl.text = this.txtYes;
-            noLbl.text = this.txtNo;
-            messageLbl.text = this.message;
+            messageLbl.text = message;
+            yesLbl.text = txtYes;
+            noLbl.text = txtNo;
+            messageLbl.text = message;
         }
         public void OnYesBtnClicked()
         {

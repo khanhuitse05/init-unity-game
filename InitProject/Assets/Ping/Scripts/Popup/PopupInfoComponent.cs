@@ -7,18 +7,14 @@ namespace Ping
     public class PopupInfoComponent : Popup
     {
         Action actionOK;
-        string message;
-        string txtOk;
         public Text messageLbl;
         public Text okLbl;
 
-        public void Init(string message, Action ok, string _ok = "OK")
+        public void Init(string message, Action ok, string txtOk = "OK")
         {
-            this.message = message;
-            this.txtOk = _ok;
             actionOK = ok;
-            messageLbl.text = this.message;
-            okLbl.text = this.txtOk;
+            messageLbl.text = message;
+            okLbl.text = txtOk;
         }
         public void OnYesBtnClicked()
         {
