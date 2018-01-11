@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System;
 using UnityEngine.UI;
-using System.Collections.Generic;
 namespace Ping
 {
     public class PopupManager : MonoBehaviour
     {
-        public static PopupManager Instance { get; private set; }
+        private static PopupManager Instance { get; set; }
         void Awake()
         {
             Instance = this;
@@ -14,24 +13,38 @@ namespace Ping
         }
 
         #region Popup
-        public Transform root;
-        public GameObject prefabConfirmPopup;
-        public GameObject PrefabInfoPopup;
-        public GameObject prefabMesage;
-
-        public void InitInfoPopUp(string message, Action ok, string _ok = "OK")
+        [SerializeField] private Transform root;
+        [SerializeField] private GameObject prefabConfirmPopup;
+        [SerializeField] private GameObject PrefabInfoPopup;
+        [SerializeField] private GameObject prefabMesage;
+        // ShowInfoPopUp
+        public static void ShowInfoPopUp(string title, string message, Action actionOk, string ok = "OK")
+        {
+            Instance._ShowInfoPopUp(title, message, actionOk, ok);
+        }
+        void _ShowInfoPopUp(string title, string message, Action actionOk, string ok = "OK")
         {
             GameObject popup = SpawnPopup(PrefabInfoPopup);
             PopupInfoComponent script = popup.GetComponent<PopupInfoComponent>();
-            script.Init(message, ok, _ok);
+            script.Init(title, message, actionOk, ok);
         }
-        public void InitYesNoPopUp(string message, Action yes, Action no, string _yes = "YES", string _no = "NO")
+        // ShowYesNoPopUp
+        public static void ShowYesNoPopUp(string title, string message, Action actionYes, Action actionNo, string yes = "YES", string no = "NO")
+        {
+            Instance._ShowYesNoPopUp(title, message, actionYes, actionNo, yes, no);
+        }
+        void _ShowYesNoPopUp(string title, string message, Action actionYes, Action actionNo, string yes = "YES", string no = "NO")
         {
             GameObject popup = SpawnPopup(prefabConfirmPopup);
             PopupConfirmComponent script = popup.GetComponent<PopupConfirmComponent>();
-            script.Init(message, yes, no, _yes, _no);
+            script.Init(title, message, actionYes, actionNo, yes, no);
         }
-        public void InitMessage(string message)
+        // ShowMessage
+        public static void ShowMessage(string message)
+        {
+            Instance._ShowMessage(message);
+        }
+        void _ShowMessage(string message)
         {
             GameObject popup = SpawnPopup(prefabMesage);
             MessageComponent script = popup.GetComponent<MessageComponent>();
@@ -54,11 +67,15 @@ namespace Ping
         public Text txtLoading;
         bool oldBackKeyState = false;
         bool revertBackKeyState = false;
-        public void SetTextLoading(string _value)
+        public static void SetTextLoading(string _value)
         {
-            txtLoading.text = _value;
+            Instance.txtLoading.text = _value;
         }
-        public void ShowLoading(string _txtLoading = "Loading...", bool disableBackKey = true)
+        public static void ShowLoading(string _txtLoading = "Loading...", bool disableBackKey = true)
+        {
+            Instance._ShowLoading(_txtLoading, disableBackKey);
+        }
+        void _ShowLoading(string _txtLoading = "Loading...", bool disableBackKey = true)
         {
             if (disableBackKey && !revertBackKeyState)
             {
@@ -69,7 +86,11 @@ namespace Ping
             txtLoading.text = _txtLoading;
             LoadingUI.SetActive(true);
         }
-        public void HideLoading()
+        public static void HideLoading()
+        {
+            Instance._HideLoading();
+        }
+        void _HideLoading()
         {
             if (revertBackKeyState)
             {
@@ -81,22 +102,19 @@ namespace Ping
         #endregion
 
 
-        /// <summary>
-        /// 
-        /// </summary>
+#if UNITY_EDITOR
         void Update()
         {
-#if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.F5)) PopupManager.Instance.InitInfoPopUp("Cheat Show Popup", null);
-            if (Input.GetKeyDown(KeyCode.F6)) PopupManager.Instance.InitYesNoPopUp("Cheat Show Popup", null, null);
+            if (Input.GetKeyDown(KeyCode.F5)) PopupManager.ShowInfoPopUp("Title", "Cheat Show Popup", null);
+            if (Input.GetKeyDown(KeyCode.F6)) PopupManager.ShowYesNoPopUp("Title", "Cheat Show Popup", null, null);
             if (Input.GetKeyDown(KeyCode.F7))
             {
-                if (LoadingUI.activeSelf == false) PopupManager.Instance.ShowLoading("Cheat Loading...");
-                else PopupManager.Instance.HideLoading();
+                if (LoadingUI.activeSelf == false) PopupManager.ShowLoading("Cheat Loading...");
+                else PopupManager.HideLoading();
             }
-            if (Input.GetKeyDown(KeyCode.F8)) PopupManager.Instance.InitMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
-#endif
+            if (Input.GetKeyDown(KeyCode.F8)) PopupManager.ShowMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
         }
+#endif
 
     }
 }

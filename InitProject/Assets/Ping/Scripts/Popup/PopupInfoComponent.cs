@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using UnityEngine.UI;
 using System;
 namespace Ping
 {
     public class PopupInfoComponent : Popup
     {
         Action actionOK;
-        public Text messageLbl;
-        public Text okLbl;
+        public Text txtTitle;
+        public Text txtMessage;
+        public Text txtOk;
 
-        public void Init(string message, Action ok, string txtOk = "OK")
+        public void Init(string title, string message, Action okAction, string txtOkButton = "OK")
         {
-            actionOK = ok;
-            messageLbl.text = message;
-            okLbl.text = txtOk;
+            actionOK = okAction;
+            txtTitle.text = title;
+            txtMessage.text = message;
+            txtOk.text = txtOkButton;
         }
         public void OnYesBtnClicked()
         {
