@@ -9,10 +9,11 @@ namespace Ping
     {
         Action actionYes;
         Action actionNo;
-        public Text txtTitle;
-        public Text txtMessage;
-        public Text txtNo;
-        public Text txtYes;
+        [SerializeField] private Text txtTitle;
+        [SerializeField] private Text txtMessage;
+        [SerializeField] private Text txtNo;
+        [SerializeField] private Text txtYes;
+        [SerializeField] private RectTransform rect;
 
         public void Init(string title, string message, Action _actionYes, Action _actionNo, string _yes = "YES", string _no = "NO")
         {
@@ -22,6 +23,19 @@ namespace Ping
             txtMessage.text = message;
             txtYes.text = _yes;
             txtNo.text = _no;
+            Snap();
+        }
+        void Snap()
+        {
+            float _height = 160;
+            Vector2 tempVect2 = Vector2.zero;
+            tempVect2.x = rect.rect.width;
+            //
+            _height += txtTitle.preferredHeight;
+            _height += txtMessage.preferredHeight;
+            //
+            tempVect2.y = _height;
+            rect.sizeDelta = tempVect2;
         }
         public void OnYesBtnClicked()
         {

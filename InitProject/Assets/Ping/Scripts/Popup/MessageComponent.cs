@@ -9,21 +9,37 @@ namespace Ping
     {
         static List<MessageComponent> listMessage = new List<MessageComponent>();
 
-        public Text messageLbl;
-        public RectTransform rect;
-        public float timeLive = 2;
+        [SerializeField] private Text messageLbl;
+        [SerializeField] private RectTransform rect;
+        [SerializeField] private RectTransform rectImage;
+        [SerializeField] private float timeLive = 2;
         public void Init(string message)
         {
-            canvasGroup = rect.GetComponent<CanvasGroup>();
             messageLbl.text = message;
             Canvas.ForceUpdateCanvases();
-            RectTransformSnap rectSnap = rect.GetComponent<RectTransformSnap>();
-            rectSnap.Snap();
-            AddMessage(this, rect.sizeDelta.y);
+            float _height = Snap();
+            AddMessage(this, _height);
             StartCoroutine(FadeIn());
         }
-                
-        CanvasGroup canvasGroup;
+        float Snap()
+        {
+            float _height = 30;
+            Vector2 tempVect2 = Vector2.zero;
+            tempVect2.x = rectImage.rect.width;
+            //
+            _height += messageLbl.preferredHeight;
+            if (_height < 80)
+            {
+                tempVect2.x = messageLbl.preferredWidth + 30;
+            }
+            //
+            tempVect2.y = _height;
+            rectImage.sizeDelta = tempVect2;
+            return _height;
+        }
+
+        #region Effect
+        [SerializeField] private CanvasGroup canvasGroup;
         const float animationDuration = 0.5f;
         private float animStartTime;
         private float animDeltaTime;
@@ -64,6 +80,7 @@ namespace Ping
             OnDestroyMessagePopup(this);
         }
 
+#endregion
 
         /// <summary>
         /// </summary>

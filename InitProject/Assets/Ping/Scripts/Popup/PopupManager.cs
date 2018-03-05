@@ -112,7 +112,16 @@ namespace Ping
                 if (LoadingUI.activeSelf == false) PopupManager.ShowLoading("Cheat Loading...");
                 else PopupManager.HideLoading();
             }
-            if (Input.GetKeyDown(KeyCode.F8)) PopupManager.ShowMessage("Date Time Now: " + DateTime.Now.ToUniversalTime());
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                int _i = UnityEngine.Random.Range(0, 10);
+                string _mes = "message";
+                for (int i = 0; i < _i; i++)
+                {
+                    _mes += " " + "Date Time Now: " + DateTime.Now.ToUniversalTime();
+                }
+                PopupManager.ShowMessage(_mes);
+            }
         }
 #endif
 
