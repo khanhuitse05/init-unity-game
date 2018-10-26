@@ -62,8 +62,6 @@ namespace Ping
     }
     public abstract class IState : MonoBehaviour
     {
-        public ParameterWrapper parameters = new ParameterWrapper();
-
         public virtual void onResume(SwipeEffect effect)
         {
         }
@@ -75,7 +73,6 @@ namespace Ping
         }
         public virtual void onExit(SwipeEffect effect)
         {
-            parameters.Clear();
         }
         protected virtual void Awake() { }
         protected virtual void Update() { }

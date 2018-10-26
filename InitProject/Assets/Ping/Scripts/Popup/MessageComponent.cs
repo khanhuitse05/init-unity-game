@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Ping;
 
 namespace Ping
 {
@@ -23,14 +24,14 @@ namespace Ping
         }
         float Snap()
         {
-            float _height = 30;
+            float _height = 56;
             Vector2 tempVect2 = Vector2.zero;
             tempVect2.x = rectImage.rect.width;
             //
             _height += messageLbl.preferredHeight;
-            if (_height < 80)
+            if (_height < 100)
             {
-                tempVect2.x = messageLbl.preferredWidth + 30;
+                tempVect2.x = messageLbl.preferredWidth + 70;
             }
             //
             tempVect2.y = _height;

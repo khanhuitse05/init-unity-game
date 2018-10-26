@@ -1,13 +1,7 @@
 ﻿using UnityEngine;
 namespace Ping
 {
-    public class DataManager : MonoBehaviour
+    public class DataManager
     {
-        static DataManager _instance;
-        public static DataManager Instance { get { return _instance; } }
-        void Awake()
-        {
-            _instance = this;
-        }
     }
 }

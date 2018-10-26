@@ -5,15 +5,19 @@ namespace Ping
 {
     public class PopupManager : MonoBehaviour
     {
-        private static PopupManager Instance { get; set; }
+        public static PopupManager Instance {  get; private set; }
         void Awake()
         {
             Instance = this;
+#if DEV
+            if(objDev != null) objDev.SetActive(true);
+#endif
             DontDestroyOnLoad(gameObject);
         }
 
-        #region Popup
+#region Popup
         [SerializeField] private Transform root;
+        [SerializeField] private GameObject objDev;
         [SerializeField] private GameObject prefabConfirmPopup;
         [SerializeField] private GameObject PrefabInfoPopup;
         [SerializeField] private GameObject prefabMesage;
@@ -53,16 +57,33 @@ namespace Ping
         
         GameObject SpawnPopup(GameObject prefab)
         {
-            GameObject popup = GameObject.Instantiate(prefab) as GameObject;
+            GameObject popup = Instantiate(prefab) as GameObject;
             popup.SetActive(true);
             popup.transform.SetParent(root);
             popup.transform.localPosition = Vector3.zero;
             popup.transform.localScale = Vector3.one;
             return popup;
         }
-        #endregion
 
-        #region Loading
+        public static int GetPopupCount()
+        {
+            return Instance.root.childCount;
+        }
+#endregion
+
+#region LoadScene
+        public PopupLoadScene loadscene;
+        public static void InitLoadScene(string nextScene)
+        {
+            Instance._InitLoadScene(nextScene);
+        }
+        void _InitLoadScene(string nextScene)
+        {
+            loadscene.Init(nextScene);
+        }
+#endregion
+
+#region Loading
         public GameObject LoadingUI;
         public Text txtLoading;
         bool oldBackKeyState = false;
@@ -101,18 +122,17 @@ namespace Ping
         }
         #endregion
 
-
 #if UNITY_EDITOR
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F5)) PopupManager.ShowInfoPopUp("Title", "Cheat Show Popup", null);
-            if (Input.GetKeyDown(KeyCode.F6)) PopupManager.ShowYesNoPopUp("Title", "Cheat Show Popup", null, null);
-            if (Input.GetKeyDown(KeyCode.F7))
+            if (Input.GetKeyDown(KeyCode.F2)) PopupManager.ShowInfoPopUp("Title", "Cheat Show Popup", null);
+            if (Input.GetKeyDown(KeyCode.F3)) PopupManager.ShowYesNoPopUp("Title\nwith tow row", "Cheat Show Popup" + "\n\n<color=#79BE29FF>https://bigc.vn</color>", null, null);
+            if (Input.GetKeyDown(KeyCode.F4))
             {
                 if (LoadingUI.activeSelf == false) PopupManager.ShowLoading("Cheat Loading...");
                 else PopupManager.HideLoading();
             }
-            if (Input.GetKeyDown(KeyCode.F8))
+            if (Input.GetKeyDown(KeyCode.F5))
             {
                 int _i = UnityEngine.Random.Range(0, 10);
                 string _mes = "message";

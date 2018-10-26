@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using LitJson;
 
 namespace Ping
 {
@@ -18,27 +17,31 @@ namespace Ping
                 return null;
             try
             {
-                //string tmpJsonData = JSONControll.base64ToJson(jsonData);
-                return JsonMapper.ToObject<T>(jsonData);
+                return JsonUtility.FromJson<T>(jsonData);
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return null;
             }
         }
+        /// <summary>
+        /// Saves the data.
+        /// </summary>
+        /// <returns><c>true</c>, if data was saved, <c>false</c> otherwise.</returns>
+        /// <param name="paramKey">Parameter key.</param>
+        /// <param name="paramData">Parameter data.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
         public static bool saveData<T>(string paramKey, T paramData) where T : class
         {
             string jsonData = "";
             if (paramData != null)
-                jsonData = JsonMapper.ToJson(paramData);
-            //string base64Data = JSONControll.jsonToBase64(jsonData);
+                jsonData = JsonUtility.ToJson(paramData);
             return saveData(paramKey, jsonData);
         }
 
         //---------------------------------------------------------------------------
         #region Basic Get/Set Functions
-
         static bool saveData(string paramKey, string paramData)
         {
             try
@@ -49,7 +52,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return false;
             }
         }
@@ -63,7 +66,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return false;
             }
         }
@@ -77,7 +80,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return false;
             }
         }
@@ -90,7 +93,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return -1;
             }
         }
@@ -103,7 +106,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return -1;
             }
         }
@@ -116,7 +119,7 @@ namespace Ping
             }
             catch (Exception ex)
             {
-                Utils.LogError(ex.StackTrace);
+                Debug.LogError(ex.StackTrace);
                 return null;
             }
         }

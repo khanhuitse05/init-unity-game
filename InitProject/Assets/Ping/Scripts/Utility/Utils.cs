@@ -13,25 +13,24 @@ namespace Ping
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = _fps;
         }
-        public static void Log(string paramLog)
-        {
-            Debug.Log(paramLog);
-        }
-        public static void LogYellow(string paramLog)
-        {
-            Debug.Log("<color=yellow>" + paramLog + "</color>");
-        }
-        public static void LogRed(string paramLog)
-        {
-            Debug.Log("<color=red>" + paramLog + "</color>");
-        }
-        public static void LogError(string paramLog)
-        {
-            Debug.LogError(paramLog);
-        }
         public static Sprite loadResourcesSprite(string param)
         {
             return Resources.Load<Sprite>("" + param);
+        }
+
+        public static List<T> Shuffle<T>(List<T> paramArray)
+        {
+            List<T> list = new List<T>(paramArray);
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = UnityEngine.Random.Range(0, n);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+            return list;
         }
         public static T[] CloneArray<T>(T[] paramArray)
         {
@@ -59,7 +58,7 @@ namespace Ping
         }
         public static GameObject Spawn(GameObject paramPrefab, Transform paramParent = null)
         {
-            GameObject newObject = GameObject.Instantiate(paramPrefab) as GameObject;
+            GameObject newObject = UnityEngine.Object.Instantiate(paramPrefab) as GameObject;
             newObject.transform.SetParent(paramParent);
             newObject.transform.localPosition = Vector3.zero;
             newObject.transform.localScale = paramPrefab.transform.localScale;
@@ -79,14 +78,24 @@ namespace Ping
             {
                 if (paramInstant)
                 {
-                    GameObject.DestroyImmediate(paramParent.GetChild(i).gameObject);
+                    UnityEngine.Object.DestroyImmediate(paramParent.GetChild(i).gameObject);
                 }
                 else
                 {
                     paramParent.GetChild(i).gameObject.SetActive(false);
-                    GameObject.Destroy(paramParent.GetChild(i).gameObject);
+                    UnityEngine.Object.Destroy(paramParent.GetChild(i).gameObject);
                 }
             }
+        }
+        public static void Snap(RectTransform thisRect, RectTransform targetRect, float xPadding, float yPadding, bool sizeOnly = true)
+        {
+            if (!sizeOnly)
+                thisRect.position = targetRect.position;
+
+            Vector2 tempVect2;
+            tempVect2.x = targetRect.rect.width + xPadding;
+            tempVect2.y = targetRect.rect.height + yPadding;
+            thisRect.sizeDelta = tempVect2;
         }
     }
 }

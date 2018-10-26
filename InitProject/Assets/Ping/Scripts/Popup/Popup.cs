@@ -10,11 +10,17 @@ namespace Ping
         private float animStartTime;
         private float animDeltaTime;
         float currentAlpha;
+        public float heighBonus;
         void Start()
         {
             canvasGroup = gameObject.GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0;
             StartCoroutine(FadeIn());
+
+        }
+        public bool clickBackgroundToBack = false;
+        public virtual void OnClickBackground()
+        {
 
         }
         protected IEnumerator FadeIn()
@@ -49,5 +55,6 @@ namespace Ping
             // finish
             Destroy(gameObject);
         }
+
     }
 }

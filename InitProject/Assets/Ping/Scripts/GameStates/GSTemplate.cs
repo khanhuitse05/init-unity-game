@@ -204,6 +204,7 @@ namespace Ping
             animDeltaTime = 0;
             guiMain.SetActive(true);
             currentAlpha = 0;
+            currentScale = guiMain.transform.localScale;
             canvasGroup.alpha = 0;
             guiMain.transform.localScale = scaleEffect;
         }
@@ -231,6 +232,7 @@ namespace Ping
             animStartTime = Time.realtimeSinceStartup;
             animDeltaTime = 0;
             currentAlpha = 1;
+            currentScale = guiMain.transform.localScale;
             canvasGroup.alpha = 1;
             guiMain.transform.localScale = Vector3.one;
         }

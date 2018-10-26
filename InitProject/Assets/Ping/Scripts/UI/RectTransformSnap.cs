@@ -17,7 +17,7 @@ namespace Ping
         public bool snapEveryFrame;
         public bool sizeOnly;
 
-        private Vector2 lastSize;
+        Vector2 lastSize;
 
         private void OnEnable()
         {
