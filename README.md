@@ -9,3 +9,7 @@
 :no_entry_sign: https://github.com/PingAK9/ImagePickerUnity
 
 :open_file_folder: https://github.com/PingAK9/AssetBundleManager
+
+:+1: https://github.com/pingak9/scaner-unity
+
+:telescope: https://github.com/PingAK9/share-image-unity
