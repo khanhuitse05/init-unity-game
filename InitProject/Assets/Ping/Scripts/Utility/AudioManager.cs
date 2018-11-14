@@ -6,7 +6,7 @@ public enum SoundType
     Coin
 }
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : MonoSingleton<AudioManager>
 {
     public AudioClip Background;
 
