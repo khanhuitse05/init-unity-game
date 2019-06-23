@@ -20,10 +20,22 @@ namespace Ping
             stateMachine.PushState(defaultState);
         }
 
-        public static void PushState(IState state, SwipeEffect effect = SwipeEffect.Active) { Instance.stateMachine.PushState(state, effect); }
-        public static void SwitchState(IState state, SwipeEffect effect = SwipeEffect.Active) { Instance.stateMachine.SwitchState(state, effect); }
-        public static void PopState(IState stateDefault = null, SwipeEffect effect = SwipeEffect.Active) { Instance.stateMachine.PopState(stateDefault, effect); }
-        public static IState currentState { get { return Instance.stateMachine.currentState; } }
+        public static void PushState(IState state, SwipeEffect effect = SwipeEffect.Active)
+        { 
+            Instance.stateMachine.PushState(state, effect); 
+        }
+        public static void SwitchState(IState state, SwipeEffect effect = SwipeEffect.Active) 
+        {
+            Instance.stateMachine.SwitchState(state, effect);
+        }
+        public static void PopState(IState stateDefault = null, SwipeEffect effect = SwipeEffect.Active)
+        {
+            Instance.stateMachine.PopState(stateDefault, effect);
+        }
+        public static IState currentState 
+        {
+            get { return Instance.stateMachine.currentState; } 
+        }
 
         void Update()
         {

@@ -18,9 +18,6 @@ namespace Ping
 #region Popup
         [SerializeField] private Transform root;
         [SerializeField] private GameObject objDev;
-        [SerializeField] private GameObject prefabConfirmPopup;
-        [SerializeField] private GameObject PrefabInfoPopup;
-        [SerializeField] private GameObject prefabMesage;
         // ShowInfoPopUp
         public static void ShowInfoPopUp(string title, string message, Action actionOk, string ok = "OK")
         {
@@ -28,7 +25,7 @@ namespace Ping
         }
         void _ShowInfoPopUp(string title, string message, Action actionOk, string ok = "OK")
         {
-            GameObject popup = SpawnPopup(PrefabInfoPopup);
+            GameObject popup = SpawnPopup("popupOk");
             PopupInfoComponent script = popup.GetComponent<PopupInfoComponent>();
             script.Init(title, message, actionOk, ok);
         }
@@ -39,7 +36,7 @@ namespace Ping
         }
         void _ShowYesNoPopUp(string title, string message, Action actionYes, Action actionNo, string yes = "YES", string no = "NO")
         {
-            GameObject popup = SpawnPopup(prefabConfirmPopup);
+            GameObject popup = SpawnPopup("popupYesNo");
             PopupConfirmComponent script = popup.GetComponent<PopupConfirmComponent>();
             script.Init(title, message, actionYes, actionNo, yes, no);
         }
@@ -50,13 +47,14 @@ namespace Ping
         }
         void _ShowMessage(string message)
         {
-            GameObject popup = SpawnPopup(prefabMesage);
+            GameObject popup = SpawnPopup("popupMessage");
             MessageComponent script = popup.GetComponent<MessageComponent>();
             script.Init(message);            
         }
         
-        GameObject SpawnPopup(GameObject prefab)
+        GameObject SpawnPopup(string param)
         {
+            GameObject prefab = Resources.Load<GameObject>("Popups/" + param);
             GameObject popup = Instantiate(prefab) as GameObject;
             popup.SetActive(true);
             popup.transform.SetParent(root);
